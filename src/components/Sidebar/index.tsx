@@ -87,7 +87,7 @@ export const DesktopSidebar = ({
   const { open, setOpen, animate } = useSidebar();
   return (
     <>
-      <motion.div
+      <motion.nav
         className={cn(
           'h-full px-4 py-3 hidden md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 flex-shrink-0',
           className
@@ -100,7 +100,7 @@ export const DesktopSidebar = ({
         {...props}
       >
         {children}
-      </motion.div>
+      </motion.nav>
     </>
   );
 };
@@ -137,7 +137,7 @@ export const MobileSidebar = ({ className, children, ...props }: React.Component
               )}
             >
               <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+                className="absolute right-10 top-10 z-50 dark:text-neutral-200"
                 onClick={() => setOpen(!open)}
               >
                 <IconX />
@@ -174,7 +174,7 @@ export const SidebarLink = ({
           display: animate ? (open ? 'inline-block' : 'none') : 'inline-block',
           opacity: animate ? (open ? 1 : 0) : 1
         }}
-        className="text-neutral-700 dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0"
+        className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0"
       >
         {link.label}
       </motion.div>
