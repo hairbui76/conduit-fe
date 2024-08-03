@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 
 import { Button } from '@/components/common/Button';
-import { IconHeart } from '@tabler/icons-react';
-import { cn, suffixS } from '@/lib/utils';
+import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
+import { suffixS } from '@/lib/utils';
 
 export default function ButtonLike({ numLike }: { numLike: number }) {
   const [hover, setHover] = useState(false);
@@ -18,7 +18,7 @@ export default function ButtonLike({ numLike }: { numLike: number }) {
       }}
       onMouseLeave={() => setHover(false)}
     >
-      <IconHeart className={cn('mr-2', hover ? 'fill-red-500' : '')} />
+      {hover ? <IconHeartFilled className="mr-2 fill-red-500" /> : <IconHeart className="mr-2" />}
       {numLike} {suffixS('Like', numLike)}
     </Button>
   );

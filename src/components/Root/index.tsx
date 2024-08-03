@@ -1,69 +1,75 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-
-import { motion } from 'framer-motion';
 import {
   IconArrowLeft,
   IconHome,
   IconSettings,
-  IconUserBolt,
   IconHeart,
   IconRosetteDiscountCheck,
-  IconBookmark
+  IconBookmark,
+  IconHomeFilled,
+  IconRosetteDiscountCheckFilled,
+  IconHeartFilled,
+  IconBookmarkFilled,
+  IconSettingsFilled,
+  IconUserFilled,
+  IconUser,
+  IconLogout2
 } from '@tabler/icons-react';
 import { cn, sliceString } from '@/lib/utils';
-import { Sidebar, SidebarBody, SidebarLink } from '../Sidebar';
+import { Sidebar } from '../Sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '../common/Avatar';
+import { SidebarBody } from '../Sidebar/SidebarBody';
+import { SidebarLink } from '../Sidebar/SidebarLink';
+import { Logo, LogoIcon } from '../Logo';
 
 export function Root({ children }: { children: React.ReactNode }) {
   const links = [
     {
       label: 'Home',
       href: '/',
-      icon: <IconHome className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      icon: <IconHome className="h-5 w-5 flex-shrink-0" />,
+      iconFilled: <IconHomeFilled className="h-5 w-5 flex-shrink-0" />
     },
     {
       label: 'Following',
       href: '/following',
-      icon: (
-        <IconRosetteDiscountCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
+      icon: <IconRosetteDiscountCheck className="h-5 w-5 flex-shrink-0" />,
+      iconFilled: <IconRosetteDiscountCheckFilled className="h-5 w-5 flex-shrink-0" />
     },
     {
       label: 'Liked',
       href: '/liked',
-      icon: <IconHeart className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      icon: <IconHeart className="h-5 w-5 flex-shrink-0" />,
+      iconFilled: <IconHeartFilled className="h-5 w-5 flex-shrink-0" />
     },
     {
       label: 'Saved',
       href: '/saved',
-      icon: (
-        <IconBookmark className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
+      icon: <IconBookmark className="h-5 w-5 flex-shrink-0" />,
+      iconFilled: <IconBookmarkFilled className="h-5 w-5 flex-shrink-0" />
     },
     {
       label: 'Profile',
       href: '/profile',
-      icon: (
-        <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
+      icon: <IconUser className="h-5 w-5 flex-shrink-0" />,
+      iconFilled: <IconUserFilled className="h-5 w-5 flex-shrink-0" />
     },
     {
       label: 'Settings',
       href: '/settings',
       icon: (
         <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+      iconFilled: (
+        <IconSettingsFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       )
     },
     {
       label: 'Logout',
       href: '#',
-      icon: (
-        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      )
+      icon: <IconLogout2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
     }
   ];
 
@@ -105,26 +111,3 @@ export function Root({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-export const Logo = () => {
-  return (
-    <Link href="/" className="flex space-x-2 items-center text-black py-1 relative z-20">
-      <Image src="/logo.png" width={30} height={30} alt="Conduit logo" />
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-bold text-black dark:text-white whitespace-pre"
-      >
-        Conduit
-      </motion.span>
-    </Link>
-  );
-};
-
-export const LogoIcon = () => {
-  return (
-    <Link href="/" className="space-x-2 py-1 relative z-20">
-      <Image src="/logo.png" width={30} height={30} alt="Conduit logo" />
-    </Link>
-  );
-};
