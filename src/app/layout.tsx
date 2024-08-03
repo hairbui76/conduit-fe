@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { Root } from '@/components/Root';
 import { cn } from '@/lib/utils';
+import QueryProvider from '@/context/query';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={cn('flex', inter.className)}>
-        <Root>{children}</Root>
+        <QueryProvider>
+          <Root>{children}</Root>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,10 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
+import { Profile } from '@/types/Profile';
 
-export default function PostCardHeaderAvatar() {
+export default function PostCardHeaderAvatar({ author }: { author: Profile }) {
   return (
     <Avatar className="w-9 h-9">
-      <AvatarImage src="https://assets.leetcode.com/users/avatars/avatar_1698835075.png" />
-      <AvatarFallback>LN</AvatarFallback>
+      <AvatarImage src={author.image} />
+      <AvatarFallback>{author.username[0].toUpperCase()}</AvatarFallback>
     </Avatar>
   );
 }

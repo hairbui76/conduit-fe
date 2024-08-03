@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Button } from '@/components/common/Button';
 import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
 import { suffixS } from '@/lib/utils';
 
-export default function ButtonLike({ numLike }: { numLike: number }) {
+export default function ButtonLike({ numLike, liked }: { numLike: number; liked: boolean }) {
   const [hover, setHover] = useState(false);
 
   return (
@@ -18,7 +18,11 @@ export default function ButtonLike({ numLike }: { numLike: number }) {
       }}
       onMouseLeave={() => setHover(false)}
     >
-      {hover ? <IconHeartFilled className="mr-2 fill-red-500" /> : <IconHeart className="mr-2" />}
+      {hover || liked ? (
+        <IconHeartFilled className="mr-2 fill-red-500" />
+      ) : (
+        <IconHeart className="mr-2" />
+      )}
       {numLike} {suffixS('Like', numLike)}
     </Button>
   );
