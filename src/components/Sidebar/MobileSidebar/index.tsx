@@ -10,7 +10,7 @@ export const MobileSidebar = ({ className, children, ...props }: React.Component
     <>
       <div
         className={cn(
-          'h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full'
+          'h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full fixed z-50 border-b'
         )}
         {...props}
       >
