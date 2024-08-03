@@ -82,7 +82,7 @@ export function Root({ children }: { children: React.ReactNode }) {
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10 border-r sticky top-0">
+        <SidebarBody className="justify-between gap-10 border-r md:sticky md:top-0">
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-12 flex flex-col gap-2">
