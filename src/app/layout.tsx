@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { Root } from '@/components/Root';
 import { cn } from '@/lib/utils';
-import QueryProvider from '@/contexts/query';
 import { Toaster } from 'react-hot-toast';
 import { cookies } from 'next/headers';
 
@@ -25,19 +24,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
-        <QueryProvider>
-          <Root isLoggedIn={isLoggedIn}>{children}</Root>
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                fontSize: '14px',
-                padding: '8px 16px'
-              },
-              duration: 5000
-            }}
-          />
-        </QueryProvider>
+        <Root isLoggedIn={isLoggedIn}>{children}</Root>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              fontSize: '14px',
+              padding: '8px 16px'
+            },
+            duration: 5000
+          }}
+        />
       </body>
     </html>
   );
