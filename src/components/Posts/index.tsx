@@ -28,7 +28,7 @@ export default function Posts({ queryKey, fetchUrl }: { queryKey: string; fetchU
   }, [fetchNextPage, inView]);
 
   if (isFetching && !isFetchingNextPage) {
-    return <Spinner />;
+    return <Spinner className="my-2 w-7 h-7" />;
   }
 
   if (isError) {
@@ -45,7 +45,7 @@ export default function Posts({ queryKey, fetchUrl }: { queryKey: string; fetchU
         </Fragment>
       ))}
       <div ref={ref} className={(cn('pb-2'), !isFetchingNextPage && !hasNextPage ? 'hidden' : '')}>
-        <Spinner />
+        <Spinner className="my-2 w-7 h-7" />
       </div>
     </>
   );

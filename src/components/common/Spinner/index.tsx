@@ -1,5 +1,6 @@
-import { IconRefresh } from '@tabler/icons-react';
+import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
-export default function Spinner() {
-  return <IconRefresh className="my-2 w-7 h-7 animate-spin" />;
+export default function Spinner({ className }: { className?: string }) {
+  return <Loader2 className={cn('animate-spin', className)} />;
 }

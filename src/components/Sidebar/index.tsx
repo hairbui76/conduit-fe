@@ -1,4 +1,4 @@
-import { SidebarProvider } from '@/context/sidebar';
+import { SidebarProvider } from '@/contexts/sidebar';
 
 export const Sidebar = ({
   children,
