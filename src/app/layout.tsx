@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { cookies } from 'next/headers';
 
 import '../styles/globals.css';
-import { Root } from '@/components/Root';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'react-hot-toast';
-import { cookies } from 'next/headers';
 import ProgressBarProvider from '@/contexts/progressbar';
+import { Sidebar } from '@/components/Sidebar';
+import { getCurrentUser } from '@/actions/user';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,12 +22,20 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const isLoggedIn = !!cookies().get('AUTH_TOKEN')?.value;
+  const currentUser = await getCurrentUser();
 
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
         <ProgressBarProvider>
-          <Root isLoggedIn={isLoggedIn}>{children}</Root>
+          <div
+            className={cn(
+              'flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto overflow-auto h-screen'
+            )}
+          >
+            <Sidebar isLoggedIn={isLoggedIn} currentUser={currentUser} />
+            {children}
+          </div>
           <Toaster
             position="bottom-right"
             toastOptions={{

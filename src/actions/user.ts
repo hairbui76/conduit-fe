@@ -1,6 +1,8 @@
 'use server';
 
 import { signupSchema } from '@/forms/signup-form';
+import { Profile } from '@/types/Profile';
+import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 export async function createUser(signupFormData: z.infer<typeof signupSchema>) {
@@ -27,4 +29,22 @@ export async function createUser(signupFormData: z.infer<typeof signupSchema>) {
       if (data.errors.username) throw new Error('Username is already used.');
     }
   }
+}
+
+export async function getCurrentUser() {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) return null;
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) return null;
+
+  const currentUser: { user: Profile } = await response.json();
+
+  return currentUser.user;
 }

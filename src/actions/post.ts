@@ -23,7 +23,7 @@ export async function getPosts(url: string, options?: { page: number }) {
 }
 
 export async function getSinglePost(slug: string) {
-  const url = `https://node-express-conduit.appspot.com/api/articles/${slug}`;
+  const url = `${process.env}/api/articles/${slug}`;
 
   const [postResponse, commentsResponse] = await Promise.all([
     fetch(url),
