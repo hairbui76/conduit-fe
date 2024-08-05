@@ -13,7 +13,7 @@ export default function SidebarUser({ currentUser }: { currentUser: Profile }) {
         icon: (
           <Avatar className="w-7 h-7">
             <AvatarImage src={currentUser.image} />
-            <AvatarFallback>LN</AvatarFallback>
+            <AvatarFallback>{currentUser.username[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         )
       }}
