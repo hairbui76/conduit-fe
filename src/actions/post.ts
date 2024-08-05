@@ -23,7 +23,7 @@ export async function getPosts(url: string, options?: { page: number }) {
 }
 
 export async function getSinglePost(slug: string) {
-  const url = `${process.env}/api/articles/${slug}`;
+  const url = `${process.env.BACKEND_URL}/api/articles/${slug}`;
 
   const [postResponse, commentsResponse] = await Promise.all([
     fetch(url),
