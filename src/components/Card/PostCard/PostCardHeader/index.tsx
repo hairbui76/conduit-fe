@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { format } from 'date-fns';
 import { CardHeader } from '@/components/common/Card';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../HoverCard';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
@@ -25,11 +26,11 @@ export default function PostCardHeader({
             {author.username}
           </Link>
         </HoverCardTrigger>
-        <HoverCardContent align="start" side="right">
+        <HoverCardContent align="start">
           <div className="flex gap-3 items-center">
             <Avatar>
               <AvatarImage src={author.image} />
-              <AvatarFallback>LN</AvatarFallback>
+              <AvatarFallback>{author.username[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
               <p className="font-bold text-sm break-all">{author.username}</p>
@@ -42,7 +43,9 @@ export default function PostCardHeader({
           </Button>
         </HoverCardContent>
       </HoverCard>
-      <time className="text-xs text-muted-foreground !m-0">{createdAt}</time>
+      <time className="text-xs text-muted-foreground !m-0">
+        {format(new Date(createdAt), "PPP 'at' H:m")}
+      </time>
     </CardHeader>
   );
 }

@@ -22,10 +22,6 @@ export default function PostCardAction() {
             Save
             <IconBookmark className="w-5 h-5 ml-auto" />
           </DropdownMenuItem>
-          <DropdownMenuItem className="p-2">
-            Save
-            <IconBookmark className="w-5 h-5 ml-auto" />
-          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

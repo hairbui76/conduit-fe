@@ -6,6 +6,7 @@ import { Root } from '@/components/Root';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'react-hot-toast';
 import { cookies } from 'next/headers';
+import ProgressBarProvider from '@/contexts/progressbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,17 +25,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
-        <Root isLoggedIn={isLoggedIn}>{children}</Root>
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              fontSize: '14px',
-              padding: '8px 16px'
-            },
-            duration: 5000
-          }}
-        />
+        <ProgressBarProvider>
+          <Root isLoggedIn={isLoggedIn}>{children}</Root>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                fontSize: '14px',
+                padding: '8px 16px',
+                marginRight: '16px'
+              },
+              duration: 5000
+            }}
+          />
+        </ProgressBarProvider>
       </body>
     </html>
   );
