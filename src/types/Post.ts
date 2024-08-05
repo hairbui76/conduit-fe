@@ -12,3 +12,5 @@ export type Post = {
   favoritesCount: number;
   author: Profile;
 };
+
+export type PostCardType = 'detail' | 'summary';

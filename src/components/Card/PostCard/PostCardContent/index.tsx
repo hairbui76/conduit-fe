@@ -1,28 +1,59 @@
 import { Badge } from '@/components/Badge';
 import { CardContent } from '@/components/common/Card';
+import { PostCardType } from '@/types/Post';
 import Link from 'next/link';
 
 export default function PostCardContent({
-  content,
+  title,
+  description,
+  body,
+  type,
   tags,
   slug
 }: {
-  content: string;
+  title: string;
+  description: string;
+  body: string;
+  type: PostCardType;
   tags: string[];
   slug: string;
 }) {
   return (
     <CardContent>
-      <Link href={`/post/${slug}`}>
-        <p className="mt-4 font-bold text-2xl break-words leading-tight">{content}</p>
-        <div className="flex gap-2 mt-2 flex-wrap">
-          {tags.map((tag, index) => (
-            <Badge key={index} variant="outline">
-              #{tag}
-            </Badge>
-          ))}
-        </div>
-      </Link>
+      <ContentComponent type={type} slug={slug}>
+        <p className="mt-4 font-bold text-2xl break-words leading-tight">{title}</p>
+        <p className="text-sm break-words leading">{description}</p>
+        {tags.length > 0 && (
+          <div className="flex gap-2 flex-wrap">
+            {tags.map((tag, index) => (
+              <Badge key={index} variant="outline">
+                #{tag}
+              </Badge>
+            ))}
+          </div>
+        )}
+        {type === 'detail' && <p className="mt-6 leading-relaxed">{body}</p>}
+      </ContentComponent>
     </CardContent>
+  );
+}
+
+function ContentComponent({
+  type,
+  slug,
+  children
+}: {
+  type: 'summary' | 'detail';
+  slug: string;
+  children: React.ReactNode;
+}) {
+  const className = 'flex flex-col gap-1';
+
+  return type === 'detail' ? (
+    <div className={className}>{children}</div>
+  ) : (
+    <Link href={`/post/${slug}`} className={className}>
+      {children}
+    </Link>
   );
 }

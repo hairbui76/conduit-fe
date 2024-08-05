@@ -15,29 +15,31 @@ export default function PostCardHeader({
   author: Profile;
   createdAt: string;
 }) {
+  const { username, image, bio } = author;
+
   return (
     <CardHeader className="flex flex-col p-0">
       <HoverCard openDelay={500}>
         <HoverCardTrigger asChild>
           <Link
-            href={`/${author.username}`}
+            href={`/${username}`}
             className="font-semibold leading-tight hover:underline hover:underline-offset-1"
           >
-            {author.username}
+            {username}
           </Link>
         </HoverCardTrigger>
         <HoverCardContent align="start">
           <div className="flex gap-3 items-center">
             <Avatar>
-              <AvatarImage src={author.image} />
-              <AvatarFallback>{author.username[0].toUpperCase()}</AvatarFallback>
+              <AvatarImage src={image} />
+              <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-bold text-sm break-all">{author.username}</p>
+              <p className="font-bold text-sm break-all">{username}</p>
             </div>
           </div>
-          <p className="text-sm my-4 italic">&quot;{author.bio}&quot;</p>
-          <Button className="w-full" size="sm">
+          {bio && bio.length > 0 && <p className="text-sm mt-4 italic">&quot;{bio}&quot;</p>}
+          <Button className="w-full mt-4" size="sm">
             <IconPlus className="w-4 h-4 mr-2" />
             Follow
           </Button>

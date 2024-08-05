@@ -1,5 +1,6 @@
 'use server';
 
+import { Comment } from '@/types/Comment';
 import { Post } from '@/types/Post';
 import { revalidatePath } from 'next/cache';
 
@@ -19,6 +20,26 @@ export async function getPosts(url: string, options?: { page: number }) {
     page: data.page,
     nextPage: data.page * limit >= data.articlesCount ? null : data.page + 1
   };
+}
+
+export async function getSinglePost(slug: string) {
+  const url = `https://node-express-conduit.appspot.com/api/articles/${slug}`;
+
+  const [postResponse, commentsResponse] = await Promise.all([
+    fetch(url),
+    fetch(`${url}/comments`)
+  ]);
+
+  if (!postResponse.ok) {
+    return null;
+  }
+
+  const [postData, commentsData] = await Promise.all([
+    postResponse.json(),
+    commentsResponse.json()
+  ]);
+
+  return { post: postData.article as Post, comments: commentsData.comments as Comment[] };
 }
 
 export async function revalidate(path: string) {

@@ -9,8 +9,6 @@ import { suffixS } from '@/lib/utils';
 export default function ButtonLike({ numLike, liked }: { numLike: number; liked: boolean }) {
   const [hover, setHover] = useState(false);
 
-  console.log(numLike);
-
   return (
     <Button
       variant="ghost"

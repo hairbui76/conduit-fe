@@ -104,9 +104,9 @@ export function Root({ isLoggedIn, children }: { isLoggedIn: boolean; children: 
   }
 
   return (
-    <nav
+    <div
       className={cn(
-        'flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-auto h-screen'
+        'flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto overflow-auto h-screen'
       )}
     >
       <Sidebar open={open} setOpen={setOpen}>
@@ -137,6 +137,6 @@ export function Root({ isLoggedIn, children }: { isLoggedIn: boolean; children: 
         </SidebarBody>
       </Sidebar>
       {children}
-    </nav>
+    </div>
   );
 }
