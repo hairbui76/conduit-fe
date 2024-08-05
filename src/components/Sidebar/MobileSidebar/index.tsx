@@ -35,12 +35,6 @@ export const MobileSidebar = ({ className, children, ...props }: React.Component
                 className
               )}
             >
-              <div
-                className="absolute right-10 top-10 z-50 dark:text-neutral-200"
-                onClick={() => setOpen(!open)}
-              >
-                <IconX />
-              </div>
               {children}
             </motion.div>
           )}

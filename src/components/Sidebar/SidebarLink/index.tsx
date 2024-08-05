@@ -1,9 +1,9 @@
 import Link, { LinkProps } from 'next/link';
+import { useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/hooks/useSidebar';
-import { useState } from 'react';
 import { logout } from '@/actions/auth';
 
 export interface Links {
@@ -23,15 +23,12 @@ export const SidebarLink = ({
   className?: string;
   props?: LinkProps;
 }) => {
-  const { open, animate } = useSidebar();
+  const { open, animate, setOpen } = useSidebar();
   const [hover, setHover] = useState(false);
 
   return link.id === 'logout' ? (
     <span
-      className={cn(
-        'flex items-center justify-start gap-3 group/sidebar py-3 cursor-pointer',
-        className
-      )}
+      className={cn('flex items-center justify-start group/sidebar py-3 cursor-pointer', className)}
       {...props}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -44,30 +41,32 @@ export const SidebarLink = ({
           display: animate ? (open ? 'inline-block' : 'none') : 'inline-block',
           opacity: animate ? (open ? 1 : 0) : 1
         }}
-        className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0"
+        className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0 !ml-3"
       >
         <span className={`${hover && 'font-semibold'}`}>{link.label}</span>
       </motion.div>
     </span>
   ) : (
-    <Link
-      href={link.href}
-      className={cn('flex items-center justify-start gap-3 group/sidebar py-3', className)}
-      {...props}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      {hover ? (link.iconFilled ? link.iconFilled : link.icon) : link.icon}
-
-      <motion.div
-        animate={{
-          display: animate ? (open ? 'inline-block' : 'none') : 'inline-block',
-          opacity: animate ? (open ? 1 : 0) : 1
-        }}
-        className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0"
+    <div onClick={() => setOpen(!open)}>
+      <Link
+        href={link.href}
+        className={cn('flex items-center justify-start group/sidebar py-3', className)}
+        {...props}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       >
-        <span className={`${hover && 'font-semibold'}`}>{link.label}</span>
-      </motion.div>
-    </Link>
+        {hover ? (link.iconFilled ? link.iconFilled : link.icon) : link.icon}
+
+        <motion.div
+          animate={{
+            display: animate ? (open ? 'inline-block' : 'none') : 'inline-block',
+            opacity: animate ? (open ? 1 : 0) : 1
+          }}
+          className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0 !ml-3"
+        >
+          <span className={`${hover && 'font-semibold'}`}>{link.label}</span>
+        </motion.div>
+      </Link>
+    </div>
   );
 };

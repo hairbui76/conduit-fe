@@ -115,7 +115,7 @@ export function Root({ isLoggedIn, children }: { isLoggedIn: boolean; children: 
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-12 flex flex-col gap-2">
               {links.map(link => (
-                <SidebarLink key={link.id} link={link} />
+                <SidebarLink key={link.id} link={link} className="pl-1" />
               ))}
             </div>
           </div>
