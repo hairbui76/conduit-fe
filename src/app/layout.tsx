@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import ProgressBarProvider from '@/contexts/progressbar';
 import { Sidebar } from '@/components/Sidebar';
 import { getCurrentUser } from '@/actions/user';
+import Section from '@/containers/root-page/section';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             )}
           >
             <Sidebar isLoggedIn={isLoggedIn} currentUser={currentUser} />
-            {children}
+            <Section>{children}</Section>
           </div>
           <Toaster
             position="bottom-right"

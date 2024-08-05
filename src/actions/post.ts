@@ -2,12 +2,19 @@
 
 import { Comment } from '@/types/Comment';
 import { Post } from '@/types/Post';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
 
 export async function getPosts(url: string, options?: { page: number }) {
   const limit = 5;
+  const token = cookies().get('AUTH_TOKEN')?.value;
 
-  const response = await fetch(`${url}?limit=${limit}&page=${options?.page || ''}`);
+  const response = await fetch(`${url}?limit=${limit}&page=${options?.page || ''}`, {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : ''
+    },
+    next: { tags: ['posts', 'global'] }
+  });
   if (!response.ok) {
     throw new Error('Could not get posts.');
   }
@@ -24,9 +31,15 @@ export async function getPosts(url: string, options?: { page: number }) {
 
 export async function getSinglePost(slug: string) {
   const url = `${process.env.BACKEND_URL}/api/articles/${slug}`;
+  const token = cookies().get('AUTH_TOKEN')?.value;
 
   const [postResponse, commentsResponse] = await Promise.all([
-    fetch(url),
+    fetch(url, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : ''
+      },
+      next: { tags: [slug] }
+    }),
     fetch(`${url}/comments`)
   ]);
 
@@ -40,6 +53,50 @@ export async function getSinglePost(slug: string) {
   ]);
 
   return { post: postData.article as Post, comments: commentsData.comments as Comment[] };
+}
+
+export async function likePost(slug: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to like this post');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}/favorite`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not like this post');
+  }
+
+  revalidateTag('posts');
+  revalidateTag(slug);
+}
+
+export async function unlikePost(slug: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to unlike this post');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}/favorite`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not unlike this post');
+  }
+
+  revalidateTag('posts');
+  revalidateTag(slug);
 }
 
 export async function revalidate(path: string) {

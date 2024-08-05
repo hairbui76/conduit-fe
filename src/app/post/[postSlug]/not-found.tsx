@@ -7,9 +7,5 @@ export default function NotFound() {
     return { text: word };
   });
 
-  return (
-    <section className="flex-grow flex flex-col items-center gap-4 px-8 md:pt-12 pt-16 pb-4 h-fit min-h-screen">
-      <TypewriterEffectSmooth words={words} />
-    </section>
-  );
+  return <TypewriterEffectSmooth words={words} />;
 }
