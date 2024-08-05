@@ -9,6 +9,6 @@ export type Post = {
   createdAt: string;
   updatedAt: string;
   favorited: boolean;
-  favoritedCount: number;
+  favoritesCount: number;
   author: Profile;
 };

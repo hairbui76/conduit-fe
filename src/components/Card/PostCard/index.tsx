@@ -7,7 +7,7 @@ import PostCardAction from './PostCardAction';
 import { Card } from '@/components/common/Card';
 
 export default function PostCard({ post }: { post: Post }) {
-  const { author, title, favoritedCount, favorited, tagList, createdAt, slug } = post;
+  const { author, title, favoritesCount, favorited, tagList, createdAt, slug } = post;
 
   return (
     <Card className="md:max-w-[600px] w-full pt-6 pb-4 px-8 h-fit">
@@ -17,7 +17,7 @@ export default function PostCard({ post }: { post: Post }) {
         <PostCardAction />
       </div>
       <PostCardContent content={title} tags={tagList} slug={slug} />
-      <PostCardFooter numLike={favoritedCount} liked={favorited} slug={slug} />
+      <PostCardFooter numLike={favoritesCount} liked={favorited} slug={slug} />
     </Card>
   );
 }
