@@ -44,13 +44,8 @@ export function LoginCard({
 
   function onLogin(loginFormData: z.infer<typeof loginSchema>) {
     startTransition(async () => {
-      try {
-        await login(loginFormData);
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : 'Something went wrong. Try again later'
-        );
-      }
+      const response = await login(loginFormData);
+      if (response.error) toast.error(response.error);
     });
   }
 

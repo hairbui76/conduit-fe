@@ -1,8 +1,9 @@
 'use server';
 
-import { loginSchema } from '@/forms/login-form';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+import { loginSchema } from '@/forms/login-form';
 import { z } from 'zod';
 
 export async function login(loginFormData: z.infer<typeof loginSchema>) {
@@ -20,9 +21,9 @@ export async function login(loginFormData: z.infer<typeof loginSchema>) {
 
   if (!response.ok) {
     if (response.status === 500) {
-      throw new Error('Something went wrong. Try again later');
+      return { error: 'Something went wrong. Try again later' };
     } else {
-      throw new Error('Email or password is incorrect.');
+      return { error: 'Email or password is incorrect.' };
     }
   } else {
     const data: {
