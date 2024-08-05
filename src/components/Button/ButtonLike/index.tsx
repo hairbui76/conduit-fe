@@ -9,6 +9,8 @@ import { suffixS } from '@/lib/utils';
 export default function ButtonLike({ numLike, liked }: { numLike: number; liked: boolean }) {
   const [hover, setHover] = useState(false);
 
+  console.log(numLike);
+
   return (
     <Button
       variant="ghost"
@@ -23,7 +25,7 @@ export default function ButtonLike({ numLike, liked }: { numLike: number; liked:
       ) : (
         <IconHeart className="mr-2" />
       )}
-      {numLike} {suffixS('Like', numLike)}
+      {numLike > 0 ? `${numLike} ${suffixS('Like', numLike)}` : 'Like'}
     </Button>
   );
 }
