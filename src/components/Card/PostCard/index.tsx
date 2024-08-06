@@ -7,15 +7,18 @@ import PostCardAction from './PostCardAction';
 import { Card } from '@/components/common/Card';
 import { Comment } from '@/types/Comment';
 import PostCardComment from './PostCardComment';
+import { Profile } from '@/types/Profile';
 
 export default function PostCard({
   post,
   type = 'summary',
-  comments
+  comments,
+  currentUser = null
 }: {
   post: Post;
   type?: PostCardType;
   comments?: Comment[];
+  currentUser?: Profile | null;
 }) {
   const { author, title, description, body, favoritesCount, favorited, tagList, createdAt, slug } =
     post;
@@ -35,8 +38,16 @@ export default function PostCard({
         type={type}
         body={body}
       />
-      <PostCardFooter numLike={favoritesCount} liked={favorited} slug={slug} type={type} />
-      {type === 'detail' && comments && <PostCardComment comments={comments} />}
+      <PostCardFooter
+        numLike={favoritesCount}
+        numComment={comments?.length}
+        liked={favorited}
+        slug={slug}
+        type={type}
+      />
+      {type === 'detail' && comments && (
+        <PostCardComment comments={comments} currentUser={currentUser} slug={slug} />
+      )}
     </Card>
   );
 }

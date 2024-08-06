@@ -6,11 +6,13 @@ import { PostCardType } from '@/types/Post';
 
 export default function PostCardFooter({
   numLike,
+  numComment,
   liked,
   slug,
   type
 }: {
   numLike: number;
+  numComment: number | undefined;
   liked: boolean;
   slug: string;
   type: PostCardType;
@@ -18,7 +20,7 @@ export default function PostCardFooter({
   return (
     <CardFooter className="py-0 flex-wrap">
       <ButtonLike numLike={numLike} liked={liked} slug={slug} />
-      <ButtonComment slug={slug} type={type} />
+      <ButtonComment numComment={numComment} slug={slug} type={type} />
       <ButtonCopy slug={slug} />
     </CardFooter>
   );

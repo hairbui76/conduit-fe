@@ -1,11 +1,20 @@
 'use client';
 
+import { useRouter } from 'next-nprogress-bar';
 import { Button } from '@/components/common/Button';
+import { suffixS } from '@/lib/utils';
 import { PostCardType } from '@/types/Post';
 import { IconBubble } from '@tabler/icons-react';
-import { useRouter } from 'next-nprogress-bar';
 
-export default function ButtonComment({ slug, type }: { slug: string; type: PostCardType }) {
+export default function ButtonComment({
+  numComment,
+  slug,
+  type
+}: {
+  numComment: number | undefined;
+  slug: string;
+  type: PostCardType;
+}) {
   const router = useRouter();
 
   return (
@@ -17,7 +26,7 @@ export default function ButtonComment({ slug, type }: { slug: string; type: Post
       }}
     >
       <IconBubble className="mr-2" />
-      Comment
+      {numComment && numComment > 0 ? `${numComment} ${suffixS('Comment', numComment)}` : 'Comment'}
     </Button>
   );
 }

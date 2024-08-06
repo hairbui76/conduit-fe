@@ -21,10 +21,7 @@ export const metadata: Metadata = {
     "Conduit is a dynamic social media platform designed to bring people together through meaningful conversations and shared experiences. Whether you're looking to connect with like-minded individuals, share your stories, or discover new perspectives, Conduit is your go-to place. Our intuitive interface and diverse community make it easy to engage, express, and inspire. Join Conduit today and be part of a network where your voice matters and connections flourish."
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const isLoggedIn = !!cookies().get('AUTH_TOKEN')?.value;
-  const currentUser = await getCurrentUser();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
@@ -34,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               'flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto overflow-auto h-screen'
             )}
           >
-            <Sidebar isLoggedIn={isLoggedIn} currentUser={currentUser} />
+            <Sidebar />
             <Section>{children}</Section>
           </div>
           <Toaster

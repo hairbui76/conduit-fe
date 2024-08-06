@@ -9,7 +9,5 @@ export default async function Page({ params }: { params: { postSlug: string } })
     notFound();
   }
 
-  console.log(data.post);
-
   return <SinglePostSection post={data.post} comments={data.comments} />;
 }

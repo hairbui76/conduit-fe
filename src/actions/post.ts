@@ -40,7 +40,7 @@ export async function getSinglePost(slug: string) {
       },
       next: { tags: [slug] }
     }),
-    fetch(`${url}/comments`)
+    fetch(`${url}/comments`, { next: { tags: [`${slug}-comments`] } })
   ]);
 
   if (!postResponse.ok) {
@@ -95,8 +95,35 @@ export async function unlikePost(slug: string) {
     throw new Error('Could not unlike this post');
   }
 
-  revalidateTag('posts');
+  revalidate('posts');
   revalidateTag(slug);
+}
+
+export async function commentPost(slug: string, comment: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to comment this post');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}/comments`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      comment: {
+        body: comment
+      }
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not comment this post');
+  }
+
+  revalidateTag(`${slug}-comments`);
 }
 
 export async function revalidate(path: string) {

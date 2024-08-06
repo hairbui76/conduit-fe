@@ -1,7 +1,9 @@
+import { Fragment } from 'react';
+import Link from 'next/link';
+
 import { Badge } from '@/components/Badge';
 import { CardContent } from '@/components/common/Card';
 import { PostCardType } from '@/types/Post';
-import Link from 'next/link';
 
 export default function PostCardContent({
   title,
@@ -32,7 +34,15 @@ export default function PostCardContent({
             ))}
           </div>
         )}
-        {type === 'detail' && <p className="mt-6 leading-relaxed">{body}</p>}
+        {type === 'detail' && (
+          <div className="mt-6 leading-relaxed">
+            {body.split('\\n').map((paragraph, index) => (
+              <Fragment key={`post-${slug}-paragraph-${index}`}>
+                <p>{paragraph}</p>
+              </Fragment>
+            ))}
+          </div>
+        )}
       </ContentComponent>
     </CardContent>
   );
