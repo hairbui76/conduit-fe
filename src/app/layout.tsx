@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils';
 import { Toaster } from 'react-hot-toast';
 import ProgressBarProvider from '@/contexts/progressbar';
 import { Sidebar } from '@/components/Sidebar';
-import Section from '@/containers/root-page/section';
+import MainSection from '@/containers/root-page';
+import { getTags } from '@/actions/tag';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,7 +25,9 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const tags = await getTags();
+
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
@@ -35,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             )}
           >
             <Sidebar />
-            <Section>{children}</Section>
+            <MainSection tags={tags}>{children}</MainSection>
           </div>
           <Toaster
             position="bottom-right"

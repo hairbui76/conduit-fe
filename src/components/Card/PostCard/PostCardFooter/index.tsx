@@ -18,7 +18,7 @@ export default function PostCardFooter({
   type: PostCardType;
 }) {
   return (
-    <CardFooter className="py-0 flex-wrap">
+    <CardFooter className="py-0 flex-wrap gap-2 px-4">
       <ButtonLike numLike={numLike} liked={liked} slug={slug} />
       <ButtonComment numComment={numComment} slug={slug} type={type} />
       <ButtonCopy slug={slug} />

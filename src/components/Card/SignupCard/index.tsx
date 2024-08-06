@@ -17,7 +17,6 @@ import {
   FormMessage
 } from '@/components/common/Form';
 import { Input } from '@/components/common/Input';
-import { Label } from '@/components/common/Label';
 import Spinner from '@/components/common/Spinner';
 import { signupSchema } from '@/forms/signup-form';
 import { zodResolver } from '@hookform/resolvers/zod';

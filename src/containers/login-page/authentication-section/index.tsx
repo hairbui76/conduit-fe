@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { LoginCard } from '@/components/Card/LoginCard';
 import { SignupCard } from '@/components/Card/SignupCard';
 
-export default function AuthenticationFrom() {
+export default function Authentication() {
   const [state, setState] = useState<'login' | 'signup'>('login');
 
   return (
