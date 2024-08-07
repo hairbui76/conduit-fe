@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 
-import { Badge } from '@/components/Badge';
+import Tag from '@/components/Tag';
 import { CardContent } from '@/components/common/Card';
 import { PostCardType } from '@/types/Post';
+import { uniqArray } from '@/lib/utils';
 
 export default function PostCardContent({
   title,
@@ -20,6 +21,8 @@ export default function PostCardContent({
   tags: string[];
   slug: string;
 }) {
+  const uniqTags = uniqArray(tags);
+
   return (
     <CardContent>
       <ContentComponent type={type} slug={slug}>
@@ -27,12 +30,10 @@ export default function PostCardContent({
           <p className="mt-4 font-bold text-2xl break-words leading-tight">{title}</p>
         )}
         {description?.length > 0 && <p className="text-sm break-words leading">{description}</p>}
-        {tags.length > 0 && (
+        {uniqTags.length > 0 && (
           <div className="flex gap-2 flex-wrap">
-            {tags.map((tag, index) => (
-              <Badge key={index} variant="outline">
-                <p className="break-all">#{tag}</p>
-              </Badge>
+            {uniqTags.map(tag => (
+              <Tag key={tag} tag={tag} />
             ))}
           </div>
         )}

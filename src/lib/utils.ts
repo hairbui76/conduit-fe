@@ -17,3 +17,7 @@ export function suffixS(str: string, quantity: number): string {
 export function insertNewLine(str: string): string {
   return replace(str, new RegExp('\n', 'g'), '\\n');
 }
+
+export function uniqArray<T>(arr: Array<T>) {
+  return Array.from(new Set(arr));
+}

@@ -1,4 +1,4 @@
-import { Badge } from '@/components/Badge';
+import Tag from '@/components/Tag';
 import {
   Carousel,
   CarouselContent,
@@ -20,13 +20,7 @@ export default function TagsCard({ tags, className }: { tags: string[]; classNam
           <CarouselContent>
             {chunk(tags, 20).map((each, index) => (
               <CarouselItem key={`tags-${index}`} className="flex gap-2 flex-wrap">
-                {each.map(tag =>
-                  tag.length > 0 ? (
-                    <Badge variant="outline" key={tag}>
-                      #{tag}
-                    </Badge>
-                  ) : null
-                )}
+                {each.map(tag => (tag.length > 0 ? <Tag key={tag} tag={tag} /> : null))}
               </CarouselItem>
             ))}
           </CarouselContent>
