@@ -1,8 +1,10 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
+
 import { signupSchema } from '@/forms/signup-form';
 import { Profile } from '@/types/Profile';
-import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 export async function createUser(signupFormData: z.infer<typeof signupSchema>) {
@@ -47,4 +49,46 @@ export async function getCurrentUser() {
   const currentUser: { user: Profile } = await response.json();
 
   return currentUser.user;
+}
+
+export async function followUser(username: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to follow this user');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/profiles/${username}/follow`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not follow this usr');
+  }
+
+  revalidateTag('posts');
+}
+
+export async function unfollowUser(username: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to unfollow this user');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/profiles/${username}/follow`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not unfollow this usr');
+  }
+
+  revalidateTag('posts');
 }

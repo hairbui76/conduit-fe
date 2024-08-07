@@ -4,9 +4,8 @@ import { format } from 'date-fns';
 import { CardHeader } from '@/components/common/Card';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../HoverCard';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
-import { Button } from '@/components/common/Button';
-import { IconPlus } from '@tabler/icons-react';
 import { Profile } from '@/types/Profile';
+import ButtonFollow from '@/components/Button/ButtonFollow';
 
 export default function PostCardHeader({
   author,
@@ -15,7 +14,7 @@ export default function PostCardHeader({
   author: Profile;
   createdAt: string;
 }) {
-  const { username, image, bio } = author;
+  const { username, image, bio, following } = author;
 
   return (
     <CardHeader className="flex flex-col p-0">
@@ -39,10 +38,7 @@ export default function PostCardHeader({
             </div>
           </div>
           {bio && bio.length > 0 && <p className="text-sm mt-4 italic">&quot;{bio}&quot;</p>}
-          <Button className="w-full mt-4" size="sm">
-            <IconPlus className="w-4 h-4 mr-2" />
-            Follow
-          </Button>
+          <ButtonFollow username={username} following={following} />
         </HoverCardContent>
       </HoverCard>
       <time className="text-xs text-muted-foreground !m-0">
