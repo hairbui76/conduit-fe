@@ -1,14 +1,36 @@
 'use client';
 
-import { getPosts } from '@/actions/post';
+import { useEffect, useState } from 'react';
+
 import { cn } from '@/lib/utils';
 import { Post } from '@/types/Post';
-import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import Spinner from '../common/Spinner';
 import PostCard from '../Card/PostCard';
 
-export default function LoadMore({ fetchUrl }: { fetchUrl: string }) {
+export default function LoadMore({
+  fetchUrl,
+  fn,
+  options
+}: {
+  fetchUrl: string;
+  fn: (
+    url: string,
+    options: {
+      page?: number;
+      liked?: string;
+    }
+  ) => Promise<{
+    posts: Post[];
+    postsCount: number;
+    page: number;
+    nextPage: number | null;
+  }>;
+  options?: {
+    page?: number;
+    liked?: string;
+  };
+}) {
   const { ref, inView } = useInView();
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState<number | null>(2);
@@ -16,14 +38,14 @@ export default function LoadMore({ fetchUrl }: { fetchUrl: string }) {
   useEffect(() => {
     if (inView) {
       if (page === null) return;
-      getPosts(fetchUrl, { page: page ?? 0 })
+      fn(fetchUrl, { page: page ?? 0, ...options })
         .then(res => {
           setPosts([...posts, ...res.posts]);
           setPage(res.nextPage);
         })
         .catch(() => setPage(null));
     }
-  }, [inView, posts, fetchUrl, page]);
+  }, [inView, posts, fetchUrl, page, fn, options]);
 
   return (
     <>

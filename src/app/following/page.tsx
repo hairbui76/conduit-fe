@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { getCurrentUser } from '@/actions/user';
-import PostsSection from '@/containers/liked-page/posts-section';
+import PostsSection from '@/containers/following-page/posts-section';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
-    return <NeedAuthCard message="You need login to see posts you liked" />;
+    return <NeedAuthCard message="You need login to see posts from people you are following" />;
   }
 
   return <PostsSection currentUser={currentUser} />;
