@@ -6,9 +6,9 @@ import NeedAuthCard from '@/components/Card/NeedAuthCard';
 import TagsSection from '@/containers/tags';
 
 export const metadata: Metadata = {
-  title: 'Liked',
+  title: 'Following',
   description:
-    "Welcome to your Liked Posts! Here, you'll find all the posts you've enjoyed and saved for easy access. Revisit your favorite content, keep up with the discussions that matter to you, and continue to engage with the creators and topics you love. This is your personal collection of inspiration, ideas, and moments that resonated with you on Conduit."
+    "Welcome to your Followed People's Posts! This is where you'll see the latest updates and posts from the people you follow on Conduit. Stay connected with your favorite creators, friends, and influencers, and be the first to engage with their new content. Enjoy a curated feed of insights, stories, and experiences from the voices you care about most."
 };
 
 export default async function Page() {
