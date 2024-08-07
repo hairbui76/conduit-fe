@@ -25,6 +25,7 @@ export default async function Posts({
   options?: {
     page?: number;
     liked?: string;
+    tag?: string;
   };
 }) {
   const postsData = await fn(fetchUrl, { page: 1, ...options });
