@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { getCurrentUser } from '@/actions/user';
 import PostsSection from '@/containers/following-page/posts-section';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
+import TagsSection from '@/containers/tags';
 
 export const metadata: Metadata = {
   title: 'Liked',
@@ -16,5 +17,10 @@ export default async function Page() {
     return <NeedAuthCard message="You need login to see posts from people you are following" />;
   }
 
-  return <PostsSection currentUser={currentUser} />;
+  return (
+    <>
+      <PostsSection currentUser={currentUser} />
+      <TagsSection />
+    </>
+  );
 }

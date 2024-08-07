@@ -24,7 +24,7 @@ export default function PostCard({
     post;
 
   return (
-    <Card className="sm:w-[570px] md:w-[640px] pt-6 pb-4 px-8 h-fit">
+    <Card className="w-full pt-6 pb-4 px-8">
       <div className="flex items-center gap-3">
         <PostCardHeaderAvatar author={author} />
         <PostCardHeader author={author} createdAt={createdAt} />

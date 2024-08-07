@@ -25,9 +25,7 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const tags = await getTags();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
@@ -38,7 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             )}
           >
             <Sidebar />
-            <MainSection tags={tags}>{children}</MainSection>
+            <MainSection>{children}</MainSection>
           </div>
           <Toaster
             position="bottom-right"

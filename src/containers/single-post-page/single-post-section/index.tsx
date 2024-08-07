@@ -12,5 +12,9 @@ export default async function SinglePostSection({
 }) {
   const currentUser = await getCurrentUser();
 
-  return <PostCard post={post} type="detail" comments={comments} currentUser={currentUser} />;
+  return (
+    <section className="flex flex-col items-center gap-4 px-4 sm:px-8 sm:w-[600px] md:w-[750px] h-fit">
+      <PostCard post={post} type="detail" comments={comments} currentUser={currentUser} />
+    </section>
+  );
 }
