@@ -1,9 +1,7 @@
-'use client';
-
 import { TypewriterEffectSmooth } from '@/components/TypewriterEffect';
 
 export default function NotFound() {
-  const words = 'Sorry, we could not find this post.'.split(' ').map(word => {
+  const words = '404 - Page not found.'.split(' ').map(word => {
     return { text: word };
   });
 
