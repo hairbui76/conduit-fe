@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { Comment } from '@/types/Comment';
 import PostCardHeaderAvatar from '../PostCardAvatar';
@@ -46,7 +46,13 @@ export default function PostCardComment({
           <PostCardHeaderAvatar author={comment.author} />
           <div className="border px-4 py-3 rounded-lg">
             <PostCardHeader author={comment.author} createdAt={comment.createdAt} />
-            <p className="col-start-2 break-all mt-2">{comment.body}</p>
+            <div className="mt-2">
+              {comment.body.split('\\n').map((paragraph, index) => (
+                <Fragment key={`comment-${comment.id}-paragraph-${index}`}>
+                  <p className="col-start-2 break-all">{paragraph}</p>
+                </Fragment>
+              ))}
+            </div>
           </div>
         </div>
       ))}

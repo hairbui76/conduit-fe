@@ -6,6 +6,7 @@ import { Button } from '@/components/common/Button';
 import { followUser, unfollowUser } from '@/actions/user';
 import toast from 'react-hot-toast';
 import { IconBellRinging2, IconPlus } from '@tabler/icons-react';
+import Spinner from '@/components/common/Spinner';
 
 export default function ButtonFollow({
   username,
@@ -40,12 +41,16 @@ export default function ButtonFollow({
     >
       {following ? (
         <>
-          <IconBellRinging2 className="w-4 h-4 mr-2" />
+          {pending ? (
+            <Spinner className="w-4 h-4 mr-2" />
+          ) : (
+            <IconBellRinging2 className="w-4 h-4 mr-2" />
+          )}
           Following
         </>
       ) : (
         <>
-          <IconPlus className="w-4 h-4 mr-2" />
+          {pending ? <Spinner className="w-4 h-4 mr-2" /> : <IconPlus className="w-4 h-4 mr-2" />}
           Follow
         </>
       )}

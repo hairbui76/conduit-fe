@@ -11,6 +11,8 @@ import { commentSchema } from '@/forms/comment-form';
 import { Profile } from '@/types/Profile';
 import PostCardHeaderAvatar from '../PostCardAvatar';
 import { commentPost } from '@/actions/post';
+import { replace } from 'lodash';
+import toast from 'react-hot-toast';
 
 export default function CommentPost({ currentUser, slug }: { currentUser: Profile; slug: string }) {
   const [pending, startTransition] = useTransition();
@@ -19,7 +21,16 @@ export default function CommentPost({ currentUser, slug }: { currentUser: Profil
   });
 
   function onSubmit(data: z.infer<typeof commentSchema>) {
-    startTransition(async () => await commentPost(slug, data.comment));
+    startTransition(async () => {
+      try {
+        await commentPost(slug, replace(data.comment, new RegExp('\n', 'g'), '\\n'));
+        form.setValue('comment', '');
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Something went wrong. Try again later', {
+          position: 'top-center'
+        });
+      }
+    });
   }
 
   return (
