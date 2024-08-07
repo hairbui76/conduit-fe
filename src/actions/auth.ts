@@ -3,10 +3,10 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { loginSchema } from '@/forms/login-form';
+import { LoginSchema } from '@/forms/login-form';
 import { z } from 'zod';
 
-export async function login(loginFormData: z.infer<typeof loginSchema>) {
+export async function login(loginFormData: z.infer<typeof LoginSchema>) {
   const response = await fetch(`${process.env.BACKEND_URL}/api/users/login`, {
     method: 'POST',
     headers: {

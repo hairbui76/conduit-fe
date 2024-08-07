@@ -23,13 +23,15 @@ export default function PostCardContent({
   return (
     <CardContent>
       <ContentComponent type={type} slug={slug}>
-        <p className="mt-4 font-bold text-2xl break-words leading-tight">{title}</p>
-        <p className="text-sm break-words leading">{description}</p>
+        {title.length > 0 && (
+          <p className="mt-4 font-bold text-2xl break-words leading-tight">{title}</p>
+        )}
+        {description?.length > 0 && <p className="text-sm break-words leading">{description}</p>}
         {tags.length > 0 && (
           <div className="flex gap-2 flex-wrap">
             {tags.map((tag, index) => (
               <Badge key={index} variant="outline">
-                #{tag}
+                <p className="break-all">#{tag}</p>
               </Badge>
             ))}
           </div>

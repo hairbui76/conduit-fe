@@ -1,9 +1,13 @@
 'use server';
 
+import { PostSchema } from '@/forms/create-form';
+import { insertNewLine } from '@/lib/utils';
 import { Comment } from '@/types/Comment';
 import { Post } from '@/types/Post';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 export async function getPosts(url: string, options: { page?: number; liked?: string }) {
   const limit = 5;
@@ -58,6 +62,47 @@ export async function getSinglePost(slug: string) {
   return { post: postData.article as Post, comments: commentsData.comments as Comment[] };
 }
 
+export async function createPost(createPostFormData: z.infer<typeof PostSchema>) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to create post');
+  }
+
+  const { title, description, body, tagList } = createPostFormData;
+  const postBody: { title: string; description?: string; body: string; tagList?: string[] } = {
+    title,
+    body: insertNewLine(body)
+  };
+  if (description.length > 0) postBody.description = description;
+  const trimmedTagList = tagList
+    .split(',')
+    .map(tag => tag.trim())
+    .filter(tag => tag.length > 0);
+  if (trimmedTagList.length > 0) postBody.tagList = trimmedTagList;
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/articles`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      article: postBody
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not create post');
+  }
+
+  const slug: string | null | undefined = (await response.json())?.article?.slug;
+  if (!!slug) {
+    revalidateTag('posts');
+    redirect(`/post/${slug}`);
+  }
+}
+
 export async function likePost(slug: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
@@ -77,6 +122,7 @@ export async function likePost(slug: string) {
   }
 
   revalidateTag('posts');
+  revalidateTag('tags');
   revalidateTag(slug);
 }
 

@@ -18,7 +18,7 @@ import {
 } from '@/components/common/Form';
 import { Input } from '@/components/common/Input';
 import Spinner from '@/components/common/Spinner';
-import { signupSchema } from '@/forms/signup-form';
+import { SignupSchema } from '@/forms/signup-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IconArrowNarrowLeft } from '@tabler/icons-react';
 import { useTransition } from 'react';
@@ -33,8 +33,8 @@ export function SignupCard({
 }) {
   const [isPending, startTransition] = useTransition();
 
-  const signupForm = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
+  const signupForm = useForm<z.infer<typeof SignupSchema>>({
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -42,7 +42,7 @@ export function SignupCard({
     }
   });
 
-  function onSignup(signupFormData: z.infer<typeof signupSchema>) {
+  function onSignup(signupFormData: z.infer<typeof SignupSchema>) {
     startTransition(async () => {
       try {
         await createUser(signupFormData);

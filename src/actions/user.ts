@@ -3,11 +3,11 @@
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { signupSchema } from '@/forms/signup-form';
+import { SignupSchema } from '@/forms/signup-form';
 import { Profile } from '@/types/Profile';
 import { z } from 'zod';
 
-export async function createUser(signupFormData: z.infer<typeof signupSchema>) {
+export async function createUser(signupFormData: z.infer<typeof SignupSchema>) {
   const response = await fetch(`${process.env.BACKEND_URL}/api/users`, {
     method: 'POST',
     headers: {

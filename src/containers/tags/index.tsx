@@ -5,7 +5,7 @@ export default async function TagsSection() {
   const tags = await getTags();
 
   return (
-    <section className="lg:pr-6">
+    <section>
       <Tags tags={tags} />
     </section>
   );

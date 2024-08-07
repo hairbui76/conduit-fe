@@ -3,7 +3,7 @@ import { useTransition } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { loginSchema } from '@/forms/login-form';
+import { LoginSchema } from '@/forms/login-form';
 import { login } from '@/actions/auth';
 import { Button } from '@/components/common/Button';
 import {
@@ -34,15 +34,15 @@ export function LoginCard({
 }) {
   const [isPending, startTransition] = useTransition();
 
-  const loginForm = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const loginForm = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: '',
       password: ''
     }
   });
 
-  function onLogin(loginFormData: z.infer<typeof loginSchema>) {
+  function onLogin(loginFormData: z.infer<typeof LoginSchema>) {
     startTransition(async () => {
       const response = await login(loginFormData);
       if (response.error) toast.error(response.error);
