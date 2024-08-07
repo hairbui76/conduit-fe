@@ -5,16 +5,19 @@ import { Post } from '@/types/Post';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function getPosts(url: string, options?: { page: number }) {
+export async function getPosts(url: string, options: { page?: number; liked?: string }) {
   const limit = 5;
   const token = cookies().get('AUTH_TOKEN')?.value;
 
-  const response = await fetch(`${url}?limit=${limit}&page=${options?.page || ''}`, {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : ''
-    },
-    next: { tags: ['posts', 'global'] }
-  });
+  const response = await fetch(
+    `${url}?limit=${limit}&page=${options.page || ''}&favorited=${options.liked || ''}`,
+    {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : ''
+      },
+      next: { tags: ['posts'] }
+    }
+  );
   if (!response.ok) {
     throw new Error('Could not get posts.');
   }

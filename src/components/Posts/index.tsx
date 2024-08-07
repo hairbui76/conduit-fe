@@ -4,8 +4,14 @@ import ButtonRefresh from '../Button/RefreshButton';
 import PostCard from '../Card/PostCard';
 import LoadMore from '../LoadMore';
 
-export default async function Posts({ fetchUrl }: { fetchUrl: string }) {
-  const postsData = await getPosts(fetchUrl, { page: 1 });
+export default async function Posts({
+  fetchUrl,
+  options
+}: {
+  fetchUrl: string;
+  options?: { page?: number; liked?: string };
+}) {
+  const postsData = await getPosts(fetchUrl, { page: 1, ...options });
 
   return (
     <>
