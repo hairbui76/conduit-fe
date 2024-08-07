@@ -17,7 +17,7 @@ export async function getPosts(
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   const response = await fetch(
-    `${url}?limit=${limit}&page=${options.page || ''}&favorited=${options.liked || ''}&tag=${options.tag || ''}`,
+    `${url}?limit=${limit}&page=${options.page || ''}&favorited=${options.liked || ''}${options.tag ? `&tag=${options.tag}` : ''}`,
     {
       headers: {
         Authorization: token ? `Bearer ${token}` : ''
