@@ -29,7 +29,7 @@ export default function PostCard({
       <div className="flex items-center gap-3">
         <PostCardHeaderAvatar author={author} />
         <PostCardHeader author={author} createdAt={createdAt} isMe={isMe} />
-        <PostCardAction />
+        <PostCardAction isMe={isMe} slug={slug} />
       </div>
       <PostCardContent
         title={title}

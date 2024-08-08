@@ -106,6 +106,27 @@ export async function createPost(createPostFormData: z.infer<typeof PostSchema>)
   }
 }
 
+export async function deletePost(slug: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to delete post');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not delete post');
+  }
+
+  revalidateTag('posts');
+}
+
 export async function likePost(slug: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
