@@ -7,6 +7,7 @@ import { SignupSchema } from '@/forms/signup-form';
 import { Profile } from '@/types/Profile';
 import { z } from 'zod';
 import { UpdateProfileSchema } from '@/forms/update-user-form';
+import { login } from './auth';
 
 export async function createUser(signupFormData: z.infer<typeof SignupSchema>) {
   const response = await fetch(`${process.env.BACKEND_URL}/api/users`, {
@@ -140,4 +141,37 @@ export async function updateProfile(updateProfileFormData: z.infer<typeof Update
   }
 
   revalidatePath('/');
+}
+
+export async function updatePassword(newPassword: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to change your password');
+  }
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      user: {
+        password: newPassword
+      }
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not change your password');
+  }
+
+  const data: {
+    user: {
+      email: string;
+    };
+  } = await response.json();
+
+  await login({ email: data.user.email, password: newPassword }, false);
 }

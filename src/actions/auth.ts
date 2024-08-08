@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { LoginSchema } from '@/forms/login-form';
 import { z } from 'zod';
 
-export async function login(loginFormData: z.infer<typeof LoginSchema>) {
+export async function login(loginFormData: z.infer<typeof LoginSchema>, rdr: boolean = true) {
   const response = await fetch(`${process.env.BACKEND_URL}/api/users/login`, {
     method: 'POST',
     headers: {
@@ -38,7 +38,8 @@ export async function login(loginFormData: z.infer<typeof LoginSchema>) {
       secure: true,
       httpOnly: true
     });
-    redirect('/');
+    if (rdr) redirect('/');
+    return null;
   }
 }
 

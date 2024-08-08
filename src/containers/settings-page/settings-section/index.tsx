@@ -29,12 +29,12 @@ export default function SettingsSection({
     },
     account: {
       description: 'Update your account settings. Set your password.',
-      Component: <AccountSettingsSection currentUser={currentUser} />
+      Component: <AccountSettingsSection />
     },
     appearance: {
       description:
         'Customize the appearance of the app. Automatically switch between day and night themes.',
-      Component: <AppearanceSettings currentUser={currentUser} />
+      Component: <AppearanceSettings />
     }
   };
 
