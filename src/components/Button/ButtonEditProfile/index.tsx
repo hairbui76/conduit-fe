@@ -13,7 +13,7 @@ export default function ButtonEditProfile({
 }) {
   return (
     <Button className={className}>
-      <Link href="/settings/account" className="flex items-center">
+      <Link href="/settings" className="flex items-center">
         <IconPencil className={cn('mr-2', iconClassname)} />
         Edit profile
       </Link>

@@ -75,7 +75,7 @@ export const SidebarContainer = ({
       {
         id: 'profile',
         label: 'Profile',
-        href: '/profile',
+        href: `/${currentUser.username}`,
         icon: <IconUser className="h-5 w-5 flex-shrink-0" />,
         iconFilled: <IconUserFilled className="h-5 w-5 flex-shrink-0" />
       },

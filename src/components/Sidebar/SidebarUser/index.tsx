@@ -9,7 +9,7 @@ export default function SidebarUser({ currentUser }: { currentUser: Profile }) {
       link={{
         id: 'avatar',
         label: sliceString(`@${currentUser.username}`, 25),
-        href: '/profile',
+        href: `/${currentUser.username}`,
         icon: (
           <Avatar className="w-7 h-7">
             <AvatarImage src={currentUser.image} />
