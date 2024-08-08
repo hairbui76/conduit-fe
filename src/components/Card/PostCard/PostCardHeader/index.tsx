@@ -6,13 +6,17 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../HoverCard';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
 import { Profile } from '@/types/Profile';
 import ButtonFollow from '@/components/Button/ButtonFollow';
+import ButtonEditProfile from '@/components/Button/ButtonEditProfile';
+import Bio from '@/components/Bio';
 
 export default function PostCardHeader({
   author,
-  createdAt
+  createdAt,
+  isMe
 }: {
   author: Profile;
   createdAt: string;
+  isMe: boolean;
 }) {
   const { username, image, bio, following } = author;
 
@@ -37,8 +41,12 @@ export default function PostCardHeader({
               <p className="font-bold text-sm break-all">{username}</p>
             </div>
           </div>
-          {bio && bio.length > 0 && <p className="text-sm mt-4 italic">&quot;{bio}&quot;</p>}
-          <ButtonFollow username={username} following={following} />
+          {bio && bio.length > 0 && <Bio text={bio} className="mt-4" />}
+          {isMe ? (
+            <ButtonEditProfile className="w-full mt-4" iconClassname="w-4 h-4" />
+          ) : (
+            <ButtonFollow username={username} following={following} className="w-full mt-4" />
+          )}
         </HoverCardContent>
       </HoverCard>
       <time className="text-xs text-muted-foreground !m-0">

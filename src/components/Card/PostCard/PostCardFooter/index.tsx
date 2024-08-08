@@ -21,7 +21,7 @@ export default function PostCardFooter({
     <CardFooter className="py-0 flex-wrap gap-2 px-4">
       <ButtonLike numLike={numLike} liked={liked} slug={slug} />
       <ButtonComment numComment={numComment} slug={slug} type={type} />
-      <ButtonCopy slug={slug} />
+      <ButtonCopy baseUrl="/post" id={slug} variant="ghost" />
     </CardFooter>
   );
 }

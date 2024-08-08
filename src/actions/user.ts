@@ -66,10 +66,11 @@ export async function followUser(username: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not follow this usr');
+    throw new Error('Could not follow this user');
   }
 
   revalidateTag('posts');
+  revalidateTag(username);
 }
 
 export async function unfollowUser(username: string) {
@@ -87,8 +88,30 @@ export async function unfollowUser(username: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not unfollow this usr');
+    throw new Error('Could not unfollow this user');
   }
 
   revalidateTag('posts');
+  revalidateTag(username);
+}
+
+export default async function getProfile(username: string) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/profiles/${username}`, {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : ''
+    },
+    next: {
+      tags: [username]
+    }
+  });
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const data: { profile: Profile } = await response.json();
+
+  return data.profile;
 }

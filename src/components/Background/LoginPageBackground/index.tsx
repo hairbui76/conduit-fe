@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-export const BackgroundCore = ({ className, ...rest }: { className?: string }) => {
+const BackgroundCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(150).fill(1);
   const cols = new Array(100).fill(1);
   let colors = [
@@ -67,4 +67,4 @@ export const BackgroundCore = ({ className, ...rest }: { className?: string }) =
   );
 };
 
-export const Background = React.memo(BackgroundCore);
+export default React.memo(BackgroundCore);

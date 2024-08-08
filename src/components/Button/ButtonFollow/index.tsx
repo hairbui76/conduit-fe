@@ -10,10 +10,14 @@ import Spinner from '@/components/common/Spinner';
 
 export default function ButtonFollow({
   username,
-  following
+  following,
+  size,
+  className
 }: {
   username: string;
   following: boolean;
+  size?: 'default' | 'sm' | 'lg' | 'icon' | null | undefined;
+  className?: string;
 }) {
   const [pending, startTrasition] = useTransition();
 
@@ -33,8 +37,8 @@ export default function ButtonFollow({
 
   return (
     <Button
-      className="w-full mt-4"
-      size="sm"
+      className={className}
+      size={size ?? 'default'}
       onClick={handleClick}
       disabled={pending}
       variant={following ? 'outline' : 'default'}

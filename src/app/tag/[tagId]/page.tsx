@@ -1,4 +1,4 @@
-import PostsSection from '@/containers/tagId-page/posts-section';
+import TaggedPostsSection from '@/containers/tagId-page/posts-section';
 import TagsSection from '@/containers/tags';
 
 export function generateMetadata({ params }: { params: { tagId: string } }) {
@@ -13,7 +13,7 @@ export function generateMetadata({ params }: { params: { tagId: string } }) {
 export default function Page({ params }: { params: { tagId: string } }) {
   return (
     <>
-      <PostsSection tag={params.tagId} />
+      <TaggedPostsSection tag={params.tagId} />
       <TagsSection />
     </>
   );

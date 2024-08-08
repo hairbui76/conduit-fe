@@ -11,13 +11,13 @@ import { z } from 'zod';
 
 export async function getPosts(
   url: string,
-  options: { page?: number; liked?: string; tag?: string }
+  options: { page?: number; liked?: string; tag?: string; author?: string }
 ) {
   const limit = 5;
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   const response = await fetch(
-    `${url}?limit=${limit}&page=${options.page || ''}&favorited=${options.liked || ''}${options.tag ? `&tag=${options.tag}` : ''}`,
+    `${url}?limit=${limit}&page=${options.page || ''}&favorited=${options.liked || ''}&author=${options.author || ''}${options.tag ? `&tag=${options.tag}` : ''}`,
     {
       headers: {
         Authorization: token ? `Bearer ${token}` : ''

@@ -7,11 +7,13 @@ import { Post } from '@/types/Post';
 import { useInView } from 'react-intersection-observer';
 import Spinner from '../common/Spinner';
 import PostCard from '../Card/PostCard';
+import { Profile } from '@/types/Profile';
 
 export default function LoadMore({
   fetchUrl,
   fn,
-  options
+  options,
+  currentUser
 }: {
   fetchUrl: string;
   fn: (
@@ -19,6 +21,7 @@ export default function LoadMore({
     options: {
       page?: number;
       liked?: string;
+      author?: string;
     }
   ) => Promise<{
     posts: Post[];
@@ -29,7 +32,9 @@ export default function LoadMore({
   options?: {
     page?: number;
     liked?: string;
+    author?: string;
   };
+  currentUser: Profile | null;
 }) {
   const { ref, inView } = useInView();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -50,7 +55,7 @@ export default function LoadMore({
   return (
     <>
       {posts.map(post => (
-        <PostCard key={post.slug} post={post} />
+        <PostCard key={post.slug} post={post} currentUser={currentUser} />
       ))}
       <div ref={ref} className={(cn('pb-2'), page === null ? 'hidden' : '')}>
         <Spinner className="my-2 w-7 h-7" />

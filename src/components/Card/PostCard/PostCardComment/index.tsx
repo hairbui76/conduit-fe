@@ -45,7 +45,11 @@ export default function PostCardComment({
         <div key={comment.id} className="flex gap-3 px-4 mb-5">
           <PostCardHeaderAvatar author={comment.author} />
           <div className="border px-4 py-3 rounded-lg">
-            <PostCardHeader author={comment.author} createdAt={comment.createdAt} />
+            <PostCardHeader
+              author={comment.author}
+              createdAt={comment.createdAt}
+              isMe={currentUser !== null && comment.author === currentUser}
+            />
             <div className="mt-2">
               {comment.body.split('\\n').map((paragraph, index) => (
                 <Fragment key={`comment-${comment.id}-paragraph-${index}`}>

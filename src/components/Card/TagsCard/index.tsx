@@ -22,7 +22,7 @@ export default function TagsCard({ tags, className }: { tags: string[]; classNam
 
   return (
     <Card className={className}>
-      <CardHeader>
+      <CardHeader className="pb-4">
         <CardTitle>Tags</CardTitle>
       </CardHeader>
       <CardContent>

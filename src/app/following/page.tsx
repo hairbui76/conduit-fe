@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import { getCurrentUser } from '@/actions/user';
-import PostsSection from '@/containers/following-page/posts-section';
+import FollowingUserPostsSection from '@/containers/following-page/posts-section';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
 import TagsSection from '@/containers/tags';
 
@@ -19,7 +19,7 @@ export default async function Page() {
 
   return (
     <>
-      <PostsSection currentUser={currentUser} />
+      <FollowingUserPostsSection currentUser={currentUser} />
       <TagsSection />
     </>
   );

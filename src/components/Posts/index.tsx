@@ -1,3 +1,4 @@
+import { Profile } from '@/types/Profile';
 import ButtonRefresh from '../Button/RefreshButton';
 
 import PostCard from '../Card/PostCard';
@@ -7,7 +8,8 @@ import { Post } from '@/types/Post';
 export default async function Posts({
   fetchUrl,
   fn,
-  options
+  options,
+  currentUser
 }: {
   fetchUrl: string;
   fn: (
@@ -15,6 +17,7 @@ export default async function Posts({
     options: {
       page?: number;
       liked?: string;
+      author?: string;
     }
   ) => Promise<{
     posts: Post[];
@@ -26,7 +29,9 @@ export default async function Posts({
     page?: number;
     liked?: string;
     tag?: string;
+    author?: string;
   };
+  currentUser: Profile | null;
 }) {
   const postsData = await fn(fetchUrl, { page: 1, ...options });
 
@@ -35,11 +40,11 @@ export default async function Posts({
       {/* <ButtonRefresh /> */}
       <>
         {postsData.posts.map(post => (
-          <PostCard key={post.slug} post={post} />
+          <PostCard key={post.slug} post={post} currentUser={currentUser} />
         ))}
 
         {postsData.nextPage ? (
-          <LoadMore fetchUrl={fetchUrl} fn={fn} options={options} />
+          <LoadMore fetchUrl={fetchUrl} fn={fn} options={options} currentUser={currentUser} />
         ) : (
           <p>You have read all posts :)</p>
         )}
