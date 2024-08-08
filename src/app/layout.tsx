@@ -43,8 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             toastOptions={{
               style: {
                 fontSize: '14px',
-                padding: '8px 16px',
-                marginRight: '16px'
+                padding: '8px 16px'
               },
               duration: 5000
             }}

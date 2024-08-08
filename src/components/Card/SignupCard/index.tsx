@@ -46,11 +46,20 @@ export function SignupCard({
     startTransition(async () => {
       try {
         await createUser(signupFormData);
-        toast.success('Account has been successfully created.');
+        toast.success('Account has been successfully created.', {
+          style: {
+            marginRight: '16px'
+          }
+        });
         setState('login');
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : 'Something went wrong. Try again later'
+          error instanceof Error ? error.message : 'Something went wrong. Try again later.',
+          {
+            style: {
+              marginRight: '16px'
+            }
+          }
         );
       }
     });

@@ -49,7 +49,7 @@ export default function CreatePostDialog() {
     startTransition(async () => {
       try {
         await createPost(createPostFormData);
-        toast.success('Post is created successfully', { position: 'top-center' });
+        toast.success('Post has been created successfully', { position: 'top-center' });
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : 'Something went wrong. Try again later',

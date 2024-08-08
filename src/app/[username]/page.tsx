@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import getProfile, { getCurrentUser } from '@/actions/user';
+import { getCurrentUser, getProfile } from '@/actions/user';
 import { Card, CardContent, CardHeader } from '@/components/common/Card';
 import UserInfoSection from '@/containers/user-profile-page/user-info-section';
 import BackgroundSection from '@/containers/user-profile-page/background-section';
