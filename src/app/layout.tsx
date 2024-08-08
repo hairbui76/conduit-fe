@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import ProgressBarProvider from '@/contexts/progressbar';
 import { Sidebar } from '@/components/Sidebar';
 import MainSection from '@/containers/root-page';
-import { getTags } from '@/actions/tag';
+import { ThemeProvider } from '@/contexts/theme';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,26 +29,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={cn('flex flex-col md:flex-row', inter.className)}>
-        <ProgressBarProvider>
-          <div
-            className={cn(
-              'flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto overflow-auto h-screen'
-            )}
-          >
-            <Sidebar />
-            <MainSection>{children}</MainSection>
-          </div>
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                fontSize: '14px',
-                padding: '8px 16px'
-              },
-              duration: 5000
-            }}
-          />
-        </ProgressBarProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ProgressBarProvider>
+            <div
+              className={cn(
+                'flex flex-col md:flex-row bg-gray-100 dark:bg-background w-full flex-1 mx-auto overflow-auto h-screen'
+              )}
+            >
+              <Sidebar />
+              <MainSection>{children}</MainSection>
+            </div>
+            <Toaster
+              position="bottom-right"
+              toastOptions={{
+                style: {
+                  fontSize: '14px',
+                  padding: '8px 16px'
+                },
+                duration: 5000
+              }}
+            />
+          </ProgressBarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

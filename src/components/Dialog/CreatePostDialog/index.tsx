@@ -64,7 +64,7 @@ export default function CreatePostDialog() {
       <DialogTrigger className="flex-grow">
         <Input
           placeholder="Start create your new post"
-          className="bg-slate-50 rounded-full hover:cursor-pointer"
+          className="rounded-full hover:cursor-pointer"
         />
       </DialogTrigger>
       <DialogContent className="gap-6">

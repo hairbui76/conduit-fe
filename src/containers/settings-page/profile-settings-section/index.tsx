@@ -20,18 +20,21 @@ import { Input } from '@/components/common/Input';
 import { updateProfile } from '@/actions/user';
 import toast from 'react-hot-toast';
 import Spinner from '@/components/common/Spinner';
+import NeedAuthCard from '@/components/Card/NeedAuthCard';
 
-export default function ProfileSettingsSection({ currentUser }: { currentUser: Profile }) {
+export default function ProfileSettingsSection({ currentUser }: { currentUser: Profile | null }) {
   const [pending, startTransition] = useTransition();
   const updateProfileForm = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
-      username: currentUser.username,
-      image: currentUser.image,
-      bio: currentUser.bio
+      username: currentUser?.username,
+      image: currentUser?.image,
+      bio: currentUser?.bio
     },
     mode: 'onChange'
   });
+
+  if (!currentUser) return <NeedAuthCard message="You need login to update your profile" />;
 
   function onSubmit(updateProfileFormData: z.infer<typeof UpdateProfileSchema>) {
     startTransition(async () => {

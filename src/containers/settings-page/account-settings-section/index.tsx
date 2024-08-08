@@ -19,8 +19,10 @@ import { Input } from '@/components/common/Input';
 import toast from 'react-hot-toast';
 import Spinner from '@/components/common/Spinner';
 import { updatePassword } from '@/actions/user';
+import { Profile } from '@/types/Profile';
+import NeedAuthCard from '@/components/Card/NeedAuthCard';
 
-export default function AccountSettingsSection() {
+export default function AccountSettingsSection({ currentUser }: { currentUser: Profile | null }) {
   const [pending, startTransition] = useTransition();
   const updatePasswordForm = useForm<z.infer<typeof UpdatePassWordSchema>>({
     resolver: zodResolver(UpdatePassWordSchema),
@@ -29,6 +31,8 @@ export default function AccountSettingsSection() {
       confirmPassword: ''
     }
   });
+
+  if (!currentUser) return <NeedAuthCard message="You need login to update your account" />;
 
   function onSubmit(updatePasswordFormData: z.infer<typeof UpdatePassWordSchema>) {
     startTransition(async () => {

@@ -1,21 +1,25 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 import { TabName } from '..';
 import ProfileSettingsSection from '../profile-settings-section';
 import AccountSettingsSection from '../account-settings-section';
-import AppearanceSettings from '../appearance-settings-section';
 import { Separator } from '@/components/Separator';
 import { capitalize } from 'lodash';
 import { Profile } from '@/types/Profile';
+
+const AppearanceSettings = dynamic(() => import('../appearance-settings-section'), {
+  ssr: false
+});
 
 export default function SettingsSection({
   className,
   currentUser
 }: {
   className: string;
-  currentUser: Profile;
+  currentUser: Profile | null;
 }) {
   const mappingTab: {
     [key in TabName]: {
@@ -29,7 +33,7 @@ export default function SettingsSection({
     },
     account: {
       description: 'Update your account settings. Set your password.',
-      Component: <AccountSettingsSection />
+      Component: <AccountSettingsSection currentUser={currentUser} />
     },
     appearance: {
       description:
