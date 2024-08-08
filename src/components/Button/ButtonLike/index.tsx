@@ -57,7 +57,7 @@ export default function ButtonLike({
       }}
     >
       {hover || optimisticLikeState.liked ? (
-        <IconHeartFilled className="mr-2 fill-red-500" />
+        <IconHeartFilled className="mr-2 fill-primary" />
       ) : (
         <IconHeart className="mr-2" />
       )}
