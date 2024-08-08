@@ -12,6 +12,7 @@ import { IconChevronsDown } from '@tabler/icons-react';
 import { Separator } from '@/components/Separator';
 import CommentPost from '../CommentPost';
 import { Profile } from '@/types/Profile';
+import CommentAction from './CommentAction';
 
 export default function PostCardComment({
   comments,
@@ -41,25 +42,26 @@ export default function PostCardComment({
           </Button>
         </div>
       )}
-      {comments.slice(0, numComment).map(comment => (
-        <div key={comment.id} className="flex gap-3 px-4 mb-5">
-          <PostCardHeaderAvatar author={comment.author} />
-          <div className="border px-4 py-3 rounded-lg">
-            <PostCardHeader
-              author={comment.author}
-              createdAt={comment.createdAt}
-              isMe={currentUser !== null && comment.author === currentUser}
-            />
-            <div className="mt-2">
-              {comment.body.split('\\n').map((paragraph, index) => (
-                <Fragment key={`comment-${comment.id}-paragraph-${index}`}>
-                  <p className="col-start-2 break-all">{paragraph}</p>
-                </Fragment>
-              ))}
+      {comments.slice(0, numComment).map(comment => {
+        const { id, author, createdAt, body } = comment;
+        const isMe = currentUser !== null && author.username === currentUser.username;
+        return (
+          <div key={id} className="flex gap-3 px-4 mb-5">
+            <PostCardHeaderAvatar author={author} />
+            <div className="border px-4 py-3 rounded-lg">
+              <PostCardHeader author={author} createdAt={createdAt} isMe={isMe} />
+              <div className="mt-2">
+                {body.split('\\n').map((paragraph, index) => (
+                  <Fragment key={`comment-${id}-paragraph-${index}`}>
+                    <p className="col-start-2 break-words">{paragraph}</p>
+                  </Fragment>
+                ))}
+              </div>
             </div>
+            <CommentAction isMe={isMe} slug={slug} commentId={id} />
           </div>
-        </div>
-      ))}
+        );
+      })}
       {numComment < comments.length && (
         <div className="text-center">
           <Button

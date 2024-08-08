@@ -196,7 +196,7 @@ export async function unlikePost(slug: string) {
   revalidateTag(slug);
 }
 
-export async function commentPost(slug: string, comment: string) {
+export async function commentPost({ slug, comment }: { slug: string; comment: string }) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
@@ -218,6 +218,30 @@ export async function commentPost(slug: string, comment: string) {
 
   if (!response.ok) {
     throw new Error('Could not comment this post');
+  }
+
+  revalidateTag(`${slug}-comments`);
+}
+
+export async function deleteComment({ slug, commentId }: { slug: string; commentId: string }) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to detete this comment');
+  }
+
+  const response = await fetch(
+    `${process.env.BACKEND_URL}/api/articles/${slug}/comments/${commentId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Could not delete this comment');
   }
 
   revalidateTag(`${slug}-comments`);
