@@ -14,8 +14,7 @@ export default async function SettingsContainer() {
     <SettingsCard>
       <div className="flex flex-col lg:flex-row gap-8">
         <Sidebar tabs={[...tabNames]} />
-
-        <SettingsSection className="flex-grow space-y-6" currentUser={currentUser} />
+        <SettingsSection className="flex-grow space-y-6 basis-2/3" currentUser={currentUser} />
       </div>
     </SettingsCard>
   );

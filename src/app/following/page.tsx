@@ -14,7 +14,12 @@ export const metadata: Metadata = {
 export default async function Page() {
   const currentUser = await getCurrentUser();
   if (!currentUser) {
-    return <NeedAuthCard message="You need login to see posts from people you are following" />;
+    return (
+      <NeedAuthCard
+        message="You need login to see posts from people you are following"
+        className="sm:w-[570px] md:w-[640px]"
+      />
+    );
   }
 
   return (

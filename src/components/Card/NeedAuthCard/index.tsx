@@ -2,10 +2,17 @@ import Link from 'next/link';
 
 import { Button } from '@/components/common/Button';
 import { Card, CardContent } from '@/components/common/Card';
+import { cn } from '@/lib/utils';
 
-export default function NeedAuthCard({ message }: { message: string }) {
+export default function NeedAuthCard({
+  message,
+  className
+}: {
+  message: string;
+  className?: string;
+}) {
   return (
-    <Card className="sm:w-[570px] md:w-[640px] px-16 py-12 h-fit flex justify-center">
+    <Card className={cn('px-16 py-12 h-fit flex justify-center', className)}>
       <CardContent className="text-center p-0">
         <p className="mb-6">{message}</p>
         <Button>
