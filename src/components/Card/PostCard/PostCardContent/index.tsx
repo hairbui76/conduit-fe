@@ -3,24 +3,12 @@ import Link from 'next/link';
 
 import Tag from '@/components/Tag';
 import { CardContent } from '@/components/common/Card';
-import { PostCardType } from '@/types/Post';
+import { Post, PostCardType } from '@/types/Post';
 import { uniqArray } from '@/lib/utils';
 
-export default function PostCardContent({
-  title,
-  description,
-  body,
-  type,
-  tags,
-  slug
-}: {
-  title: string;
-  description: string;
-  body: string;
-  type: PostCardType;
-  tags: string[];
-  slug: string;
-}) {
+export default function PostCardContent({ post, type }: { post: Post; type: PostCardType }) {
+  const { title, description, body, tagList: tags, slug } = post;
+
   const uniqTags = uniqArray(tags);
 
   return (

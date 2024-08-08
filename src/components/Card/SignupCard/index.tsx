@@ -46,7 +46,7 @@ export function SignupCard({
     startTransition(async () => {
       try {
         await createUser(signupFormData);
-        toast.success('Account has been successfully created.', {
+        toast.success('Account was successfully created.', {
           style: {
             marginRight: '16px'
           }

@@ -72,17 +72,7 @@ export async function createPost(createPostFormData: z.infer<typeof PostSchema>)
     throw new Error('You need login to create post');
   }
 
-  const { title, description, body, tagList } = createPostFormData;
-  const postBody: { title: string; description?: string; body: string; tagList?: string[] } = {
-    title,
-    body: insertNewLine(body)
-  };
-  if (description.length > 0) postBody.description = description;
-  const trimmedTagList = tagList
-    .split(',')
-    .map(tag => tag.trim())
-    .filter(tag => tag.length > 0);
-  if (trimmedTagList.length > 0) postBody.tagList = trimmedTagList;
+  const postBody = processPostFormData(createPostFormData);
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/articles`, {
     method: 'POST',
@@ -104,6 +94,40 @@ export async function createPost(createPostFormData: z.infer<typeof PostSchema>)
     revalidateTag('posts');
     redirect(`/post/${slug}`);
   }
+}
+
+export async function updatePost({
+  updatePostFormData,
+  slug
+}: {
+  updatePostFormData: z.infer<typeof PostSchema>;
+  slug: string;
+}) {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    throw new Error('You need login to update post');
+  }
+
+  const putBody = processPostFormData(updatePostFormData);
+
+  const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      article: putBody
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Could not update post');
+  }
+
+  revalidateTag('posts');
+  redirect(`/post/${slug}`);
 }
 
 export async function deletePost(slug: string) {
@@ -201,4 +225,26 @@ export async function commentPost(slug: string, comment: string) {
 
 export async function revalidate(path: string) {
   revalidatePath(path, 'layout');
+}
+
+function processPostFormData(formData: z.infer<typeof PostSchema>): {
+  title: string;
+  description?: string;
+  body: string;
+  tagList?: string[];
+} {
+  const { title, description, body, tagList } = formData;
+
+  const requestBody: { title: string; description?: string; body: string; tagList?: string[] } = {
+    title,
+    body: insertNewLine(body)
+  };
+  if (description.length > 0) requestBody.description = description;
+  const trimmedTagList = tagList
+    .split(',')
+    .map(tag => tag.trim())
+    .filter(tag => tag.length > 0);
+  if (trimmedTagList.length > 0) requestBody.tagList = trimmedTagList;
+
+  return requestBody;
 }

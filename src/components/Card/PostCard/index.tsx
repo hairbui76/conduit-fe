@@ -20,8 +20,7 @@ export default function PostCard({
   comments?: Comment[];
   currentUser?: Profile | null;
 }) {
-  const { author, title, description, body, favoritesCount, favorited, tagList, createdAt, slug } =
-    post;
+  const { author, createdAt, slug } = post;
   const isMe = currentUser !== null && currentUser.username === author.username;
 
   return (
@@ -31,21 +30,8 @@ export default function PostCard({
         <PostCardHeader author={author} createdAt={createdAt} isMe={isMe} />
         <PostCardAction isMe={isMe} slug={slug} />
       </div>
-      <PostCardContent
-        title={title}
-        description={description}
-        tags={tagList}
-        slug={slug}
-        type={type}
-        body={body}
-      />
-      <PostCardFooter
-        numLike={favoritesCount}
-        numComment={comments?.length}
-        liked={favorited}
-        slug={slug}
-        type={type}
-      />
+      <PostCardContent post={post} type={type} />
+      <PostCardFooter numComment={comments?.length} type={type} post={post} isMe={isMe} />
       {type === 'detail' && comments && (
         <PostCardComment comments={comments} currentUser={currentUser} slug={slug} />
       )}

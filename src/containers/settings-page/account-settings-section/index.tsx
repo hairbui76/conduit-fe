@@ -38,7 +38,7 @@ export default function AccountSettingsSection({ currentUser }: { currentUser: P
     startTransition(async () => {
       try {
         await updatePassword(updatePasswordFormData.password);
-        toast.success(() => <p className="w-max">Your password has been changed</p>, {
+        toast.success(() => <p className="w-max">Your password was changed</p>, {
           position: 'top-center'
         });
       } catch (err) {

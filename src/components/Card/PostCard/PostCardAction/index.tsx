@@ -1,5 +1,4 @@
 import ButtonDeletePost from '@/components/Button/ButtonDeletePost';
-import ButtonEditPost from '@/components/Button/ButtonEditPost';
 import { Button } from '@/components/common/Button';
 import {
   DropdownMenu,
@@ -22,9 +21,6 @@ export default function PostCardAction({ isMe, slug }: { isMe: boolean; slug: st
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 p-2" align="end">
         <DropdownMenuGroup>
-          <DropdownMenuItem className="p-0">
-            <ButtonEditPost />
-          </DropdownMenuItem>
           <DropdownMenuItem className="p-0">
             <ButtonDeletePost slug={slug} />
           </DropdownMenuItem>

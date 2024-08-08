@@ -49,7 +49,7 @@ export default function CreatePostDialog() {
     startTransition(async () => {
       try {
         await createPost(createPostFormData);
-        toast.success('Post has been created successfully', { position: 'top-center' });
+        toast.success('Post was created successfully', { position: 'top-center' });
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : 'Something went wrong. Try again later',
@@ -139,7 +139,7 @@ export default function CreatePostDialog() {
             />
             <DialogFooter className="flex-row justify-end gap-3 sm:gap-0">
               <DialogClose>
-                <Button variant="outline" disabled={pending}>
+                <Button variant="outline" disabled={pending} type="button">
                   Cancel
                 </Button>
               </DialogClose>

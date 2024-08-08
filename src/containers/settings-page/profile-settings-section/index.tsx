@@ -40,7 +40,7 @@ export default function ProfileSettingsSection({ currentUser }: { currentUser: P
     startTransition(async () => {
       try {
         await updateProfile(updateProfileFormData);
-        toast.success(() => <p className="w-max">Your profile has been updated successfully</p>, {
+        toast.success(() => <p className="w-max">Your profile was updated successfully</p>, {
           position: 'top-center'
         });
       } catch (err) {
