@@ -1,10 +1,11 @@
-import Link, { LinkProps } from 'next/link';
 import { useState } from 'react';
+import Link, { LinkProps } from 'next/link';
 
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useSidebar } from '@/hooks/useSidebar';
 import { logout } from '@/actions/auth';
+import { usePathname } from 'next/navigation';
 
 export interface Links {
   id: string;
@@ -25,6 +26,8 @@ export const SidebarLink = ({
 }) => {
   const { open, animate, setOpen } = useSidebar();
   const [hover, setHover] = useState(false);
+  const pathname = usePathname();
+  const isActive = pathname === link.href;
 
   return link.id === 'logout' ? (
     <span
@@ -55,7 +58,7 @@ export const SidebarLink = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {hover ? (link.iconFilled ? link.iconFilled : link.icon) : link.icon}
+        {hover || isActive ? (link.iconFilled ? link.iconFilled : link.icon) : link.icon}
 
         <motion.div
           animate={{

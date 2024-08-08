@@ -13,7 +13,6 @@ import {
   IconSettings,
   IconHeart,
   IconRosetteDiscountCheck,
-  IconBookmark,
   IconHomeFilled,
   IconRosetteDiscountCheckFilled,
   IconHeartFilled,
@@ -64,13 +63,6 @@ export const SidebarContainer = ({
         href: '/liked',
         icon: <IconHeart className="h-5 w-5 flex-shrink-0" />,
         iconFilled: <IconHeartFilled className="h-5 w-5 flex-shrink-0" />
-      },
-      {
-        id: 'saved',
-        label: 'Saved',
-        href: '/saved',
-        icon: <IconBookmark className="h-5 w-5 flex-shrink-0" />,
-        iconFilled: <IconBookmarkFilled className="h-5 w-5 flex-shrink-0" />
       },
       {
         id: 'profile',
