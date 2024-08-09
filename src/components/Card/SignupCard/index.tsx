@@ -1,3 +1,8 @@
+'use client';
+
+import { useTransition } from 'react';
+import Link from 'next/link';
+
 import { createUser } from '@/actions/user';
 import { Button } from '@/components/common/Button';
 import {
@@ -21,16 +26,11 @@ import Spinner from '@/components/common/Spinner';
 import { SignupSchema } from '@/forms/signup-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IconArrowNarrowLeft } from '@tabler/icons-react';
-import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
 
-export function SignupCard({
-  setState
-}: {
-  setState: React.Dispatch<React.SetStateAction<'login' | 'signup'>>;
-}) {
+export function SignupCard() {
   const [isPending, startTransition] = useTransition();
 
   const signupForm = useForm<z.infer<typeof SignupSchema>>({
@@ -51,7 +51,9 @@ export function SignupCard({
             marginRight: '16px'
           }
         });
-        setState('login');
+        signupForm.setValue('username', '');
+        signupForm.setValue('email', '');
+        signupForm.setValue('password', '');
       } catch (error) {
         toast.error(
           error instanceof Error ? error.message : 'Something went wrong. Try again later.',
@@ -117,18 +119,15 @@ export function SignupCard({
             />
           </CardContent>
           <CardFooter className="flex-col gap-4">
-            <Button className="w-full" disabled={isPending}>
+            <Button className="w-full" disabled={isPending} type="submit">
               {isPending && <Spinner className="mr-2 h-4 w-4" />}
               Create account
             </Button>
-            <Button
-              className="w-full"
-              variant="outline"
-              disabled={isPending}
-              onClick={() => setState('login')}
-            >
-              <IconArrowNarrowLeft className="w-4 h-4 mr-2" />
-              Back to login
+            <Button className="w-full" variant="outline" disabled={isPending} type="button">
+              <Link href="/login" className="flex items-center">
+                <IconArrowNarrowLeft className="w-4 h-4 mr-2" />
+                Back to login
+              </Link>
             </Button>
           </CardFooter>
         </Card>

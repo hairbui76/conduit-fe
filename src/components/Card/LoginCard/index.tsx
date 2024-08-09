@@ -1,3 +1,6 @@
+'use client';
+
+import Link from 'next/link';
 import { useTransition } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,11 +30,7 @@ import {
 import toast from 'react-hot-toast';
 import Spinner from '@/components/common/Spinner';
 
-export function LoginCard({
-  setState
-}: {
-  setState: React.Dispatch<React.SetStateAction<'login' | 'signup'>>;
-}) {
+export function LoginCard() {
   const [isPending, startTransition] = useTransition();
 
   const loginForm = useForm<z.infer<typeof LoginSchema>>({
@@ -99,17 +98,9 @@ export function LoginCard({
             </Button>
             <p className="text-sm gap-1 flex items-center">
               Dont&apos;t have an account?{' '}
-              <Button
-                type="button"
-                variant="link"
-                className="text-primary font-bold flex p-0"
-                disabled={isPending}
-                onClick={() => {
-                  setState('signup');
-                }}
-              >
+              <Link href="/signup" className="text-primary font-bold flex p-0">
                 Sign up <IconArrowNarrowRight className="w-5 h-5" />
-              </Button>
+              </Link>
             </p>
           </CardFooter>
         </Card>

@@ -1,19 +1,13 @@
-'use client';
-
-import { useState } from 'react';
-
 import { LoginCard } from '@/components/Card/LoginCard';
 import { SignupCard } from '@/components/Card/SignupCard';
 
-export default function Authentication() {
-  const [state, setState] = useState<'login' | 'signup'>('login');
-
+export default function Authentication({ page }: { page: 'login' | 'signup' }) {
   return (
     <div
-      id="authentication"
-      className="flex justify-center items-center md:flex-grow h-screen px-4"
+      id={`${page}-form`}
+      className="flex justify-center items-center md:flex-grow min-h-screen px-4"
     >
-      {state === 'login' ? <LoginCard setState={setState} /> : <SignupCard setState={setState} />}
+      {page === 'login' ? <LoginCard /> : <SignupCard />}
     </div>
   );
 }

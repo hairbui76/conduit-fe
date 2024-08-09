@@ -34,7 +34,7 @@ export const SidebarContainer = ({
 }) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  if (pathname === '/login') return null;
+  if (pathname === '/login' || pathname === '/signup') return null;
 
   const isLoggedIn = currentUser !== null;
 
