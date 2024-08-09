@@ -12,7 +12,7 @@ export default async function CreatePostSection() {
   return (
     <Card className="px-6 py-4 flex gap-3 w-full items-center">
       <Avatar className="w-9 h-9">
-        <AvatarImage src={image} />
+        <AvatarImage src={image} alt={`${username} avatar`} />
         <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
       <CreatePostDialog />

@@ -35,7 +35,7 @@ export default function ButtonDeletePost({ slug }: { slug: string }) {
   return (
     <Button
       type="submit"
-      className="p-2 text-red-500 w-full hover:text-red-500"
+      className="px-2 text-red-500 w-full hover:text-red-500"
       variant="ghost"
       onClick={handleDeletePost}
     >

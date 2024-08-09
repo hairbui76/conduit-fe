@@ -55,7 +55,7 @@ export default function CommentPost({ currentUser, slug }: { currentUser: Profil
                       }
                     }}
                     disabled={pending}
-                    maxLength={200}
+                    maxLength={500}
                   />
                 </FormControl>
                 <FormMessage className="text-sm" />

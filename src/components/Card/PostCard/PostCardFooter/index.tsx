@@ -1,5 +1,4 @@
 import ButtonComment from '@/components/Button/ButtonComment';
-import ButtonCopy from '@/components/Button/ButtonCopy';
 import ButtonEditPost from '@/components/Button/ButtonEditPost';
 import ButtonLike from '@/components/Button/ButtonLike';
 import { CardFooter } from '@/components/common/Card';
@@ -23,7 +22,6 @@ export default function PostCardFooter({
       <ButtonLike numLike={numLike} liked={liked} slug={slug} />
       <ButtonComment numComment={numComment} slug={slug} type={type} />
       {isMe && <ButtonEditPost post={post} />}
-      <ButtonCopy baseUrl="/post" id={slug} variant="ghost" />
     </CardFooter>
   );
 }

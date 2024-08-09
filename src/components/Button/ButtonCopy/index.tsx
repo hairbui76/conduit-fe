@@ -7,7 +7,9 @@ import toast from 'react-hot-toast';
 export default function ButtonCopy({
   baseUrl,
   id,
-  variant
+  variant,
+  className,
+  iconClassName
 }: {
   baseUrl: string;
   id: string;
@@ -20,18 +22,20 @@ export default function ButtonCopy({
     | 'link'
     | null
     | undefined;
+  className?: string;
+  iconClassName?: string;
 }) {
   return (
     <Button
       variant={variant || 'default'}
-      className="flex-grow py-0"
+      className={className}
       onClick={() => {
         navigator.clipboard.writeText(`${window.location.origin}${baseUrl}/${id}`);
         toast.success('Copied link to clipboard', { position: 'top-center' });
       }}
     >
-      <IconLink className="mr-2" />
       Copy link
+      <IconLink className={iconClassName} />
     </Button>
   );
 }

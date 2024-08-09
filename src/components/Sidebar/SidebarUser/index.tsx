@@ -12,7 +12,7 @@ export default function SidebarUser({ currentUser }: { currentUser: Profile }) {
         href: `/${currentUser.username}`,
         icon: (
           <Avatar className="w-7 h-7">
-            <AvatarImage src={currentUser.image} />
+            <AvatarImage src={currentUser.image} alt={`${currentUser.username} avatar`} />
             <AvatarFallback>{currentUser.username[0].toUpperCase()}</AvatarFallback>
           </Avatar>
         )

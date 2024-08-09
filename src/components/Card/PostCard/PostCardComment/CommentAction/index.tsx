@@ -23,7 +23,12 @@ export default function CommentAction({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="self-center">
-        <Button variant="ghost" className="rounded-full p-1 w-6 h-6" size="sm">
+        <Button
+          variant="ghost"
+          className="rounded-full p-1 w-6 h-6"
+          size="sm"
+          aria-label="Action with this comment"
+        >
           <IconDots />
         </Button>
       </DropdownMenuTrigger>

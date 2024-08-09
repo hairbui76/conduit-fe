@@ -12,15 +12,17 @@ export const generateMetadata = async ({ params }: { params: { postSlug: string 
       description: 'This post can not be found'
     };
 
+  const { title, description, createdAt, author } = data.post;
+
   return {
-    title: data.post.title,
-    description: data.post.description,
+    title: title,
+    description: description === undefined || description.length === 0 ? title : description,
     openGraph: {
-      title: data.post.title,
-      description: data.post.description,
+      title: title,
+      description: description,
       type: 'article',
-      publishedTime: data.post.createdAt,
-      authors: [data.post.author]
+      publishedTime: createdAt,
+      authors: [author]
     }
   };
 };

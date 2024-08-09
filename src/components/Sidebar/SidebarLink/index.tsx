@@ -57,6 +57,7 @@ export const SidebarLink = ({
         {...props}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        aria-label={`${link.label}`}
       >
         {hover || isActive ? (link.iconFilled ? link.iconFilled : link.icon) : link.icon}
 

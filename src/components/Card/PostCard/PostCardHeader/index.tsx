@@ -34,7 +34,7 @@ export default function PostCardHeader({
         <HoverCardContent align="start">
           <div className="flex gap-3 items-center">
             <Avatar>
-              <AvatarImage src={image} />
+              <AvatarImage src={image} alt={`${username} avatar`} />
               <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>

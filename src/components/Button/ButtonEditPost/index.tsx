@@ -75,7 +75,7 @@ export default function ButtonEditPost({ post }: { post: Post }) {
   return (
     <Dialog open={open}>
       <DialogTrigger className="flex-grow">
-        <Button className="py-0" variant="ghost" onClick={() => setOpen(true)}>
+        <Button className="py-0 w-full" variant="ghost" onClick={() => setOpen(true)}>
           <IconEdit className="mr-2" />
           Edit
         </Button>
