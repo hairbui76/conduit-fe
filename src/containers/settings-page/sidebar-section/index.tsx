@@ -19,7 +19,7 @@ export default function Sidebar({ tabs }: { tabs: TabName[] }) {
   }
 
   return (
-    <nav className="flex lg:flex-col basis-1/3 flex-wrap">
+    <nav className="flex lg:flex-col basis-1/3 flex-wrap gap-2">
       {tabs.map(tab => (
         <Button
           key={tab}

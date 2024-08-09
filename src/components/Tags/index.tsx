@@ -1,3 +1,5 @@
+'use client';
+
 import TagsCard from '@/components/Card/TagsCard';
 import { Button } from '@/components/common/Button';
 import { IconTag } from '@tabler/icons-react';
@@ -28,6 +30,7 @@ export default function Tags({ tags }: { tags: string[] | null }) {
           sideOffset={8}
           alignOffset={50}
           className="w-fit p-0"
+          onOpenAutoFocus={e => e.preventDefault()}
         >
           <TagsCard tags={tags} className="max-w-80 h-fit border-none shadow-none" />
         </PopoverContent>

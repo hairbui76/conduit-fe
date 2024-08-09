@@ -80,7 +80,7 @@ export default function ButtonEditPost({ post }: { post: Post }) {
           Edit
         </Button>
       </DialogTrigger>
-      <DialogContent className="gap-6">
+      <DialogContent className="gap-6" onOpenAutoFocus={e => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle className="text-xl">Update your post</DialogTitle>
           <DialogDescription className="!mt-0">

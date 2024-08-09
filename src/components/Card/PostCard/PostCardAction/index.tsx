@@ -11,8 +11,6 @@ import {
 import { IconDots } from '@tabler/icons-react';
 
 export default function PostCardAction({ isMe, slug }: { isMe: boolean; slug: string }) {
-  if (!isMe) return null;
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,9 +33,11 @@ export default function PostCardAction({ isMe, slug }: { isMe: boolean; slug: st
               iconClassName="w-5 h-5 ml-auto"
             />
           </DropdownMenuItem>
-          <DropdownMenuItem className="p-0">
-            <ButtonDeletePost slug={slug} />
-          </DropdownMenuItem>
+          {isMe && (
+            <DropdownMenuItem className="p-0">
+              <ButtonDeletePost slug={slug} />
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
