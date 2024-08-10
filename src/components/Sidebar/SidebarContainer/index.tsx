@@ -16,7 +16,6 @@ import {
   IconHomeFilled,
   IconRosetteDiscountCheckFilled,
   IconHeartFilled,
-  IconBookmarkFilled,
   IconSettingsFilled,
   IconUserFilled,
   IconUser,
