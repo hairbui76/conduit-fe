@@ -23,7 +23,7 @@ export default function ButtonComment({
       variant="ghost"
       className="flex-grow py-0"
       onClick={() => {
-        if (type === 'summary') router.push(`/posts/${slug}`);
+        if (type === 'summary') router.push(`/post/${slug}`);
       }}
     >
       <IconBubble className="mr-2" />

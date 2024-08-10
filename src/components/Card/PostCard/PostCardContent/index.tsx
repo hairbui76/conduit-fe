@@ -53,7 +53,7 @@ function ContentComponent({
   return type === 'detail' ? (
     <div className={className}>{children}</div>
   ) : (
-    <Link href={`/posts/${slug}`} className={className}>
+    <Link href={`/post/${slug}`} className={className}>
       {children}
     </Link>
   );
