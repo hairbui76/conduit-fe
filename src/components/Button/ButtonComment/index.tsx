@@ -5,6 +5,7 @@ import { Button } from '@/components/common/Button';
 import { suffixS } from '@/lib/utils';
 import { PostCardType } from '@/types/Post';
 import { IconBubble } from '@tabler/icons-react';
+import Countup from 'react-countup';
 
 export default function ButtonComment({
   numComment,
@@ -26,7 +27,14 @@ export default function ButtonComment({
       }}
     >
       <IconBubble className="mr-2" />
-      {numComment && numComment > 0 ? `${numComment} ${suffixS('Comment', numComment)}` : 'Comment'}
+      {numComment && numComment > 0 ? (
+        <>
+          <Countup end={numComment} className="mr-1" />
+          {suffixS('Comment', numComment)}
+        </>
+      ) : (
+        'Comment'
+      )}
     </Button>
   );
 }
