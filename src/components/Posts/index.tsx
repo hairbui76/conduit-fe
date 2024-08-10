@@ -37,7 +37,6 @@ export default async function Posts({
 
   return (
     <>
-      {/* <ButtonRefresh /> */}
       <>
         {postsData.posts.map(post => (
           <PostCard key={post.slug} post={post} currentUser={currentUser} />
