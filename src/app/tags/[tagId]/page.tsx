@@ -11,6 +11,18 @@ export function generateMetadata({ params }: { params: { tagId: string } }) {
   };
 }
 
+export async function generateStaticParams() {
+  const tags = await getTags();
+
+  return (
+    tags
+      ?.filter(tag => tag.length > 0)
+      .map(tag => ({
+        tagId: tag
+      })) || []
+  );
+}
+
 export default function Page({ params }: { params: { tagId: string } }) {
   return (
     <>
