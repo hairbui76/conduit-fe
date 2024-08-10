@@ -92,7 +92,7 @@ export async function createPost(createPostFormData: z.infer<typeof PostSchema>)
   const slug: string | null | undefined = (await response.json())?.article?.slug;
   if (!!slug) {
     revalidateTag('posts');
-    redirect(`/post/${slug}`);
+    redirect(`/posts/${slug}`);
   }
 }
 
@@ -127,7 +127,6 @@ export async function updatePost({
   }
 
   revalidateTag('posts');
-  redirect(`/post/${slug}`);
 }
 
 export async function deletePost(slug: string) {

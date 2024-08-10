@@ -1,5 +1,4 @@
 import { Profile } from '@/types/Profile';
-import ButtonRefresh from '../Button/RefreshButton';
 
 import PostCard from '../Card/PostCard';
 import LoadMore from '../LoadMore';
