@@ -26,7 +26,7 @@ export default function PostCardAction({ isMe, slug }: { isMe: boolean; slug: st
         <DropdownMenuGroup>
           <DropdownMenuItem className="p-0">
             <ButtonCopy
-              baseUrl="/post"
+              page="/post"
               id={slug}
               variant="ghost"
               className="px-2 flex-grow"

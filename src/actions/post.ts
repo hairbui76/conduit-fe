@@ -11,9 +11,9 @@ import { z } from 'zod';
 
 export async function getPosts(
   url: string,
-  options: { page?: number; liked?: string; tag?: string; author?: string }
+  options: { page?: number; liked?: string; tag?: string; author?: string; limit?: number }
 ) {
-  const limit = 5;
+  const limit = options.limit || 5;
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   const response = await fetch(
