@@ -91,12 +91,25 @@ export const SidebarContainer = ({
       }
     ]);
   } else {
-    links.push({
-      id: 'login',
-      label: 'Login / Signup',
-      href: '/login',
-      icon: <IconLogin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-    });
+    links = links.concat([
+      {
+        id: 'settings',
+        label: 'Settings',
+        href: '/settings?tab=appearance',
+        icon: (
+          <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        ),
+        iconFilled: (
+          <IconSettingsFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        )
+      },
+      {
+        id: 'login',
+        label: 'Login / Signup',
+        href: '/login',
+        icon: <IconLogin className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      }
+    ]);
   }
 
   return (
