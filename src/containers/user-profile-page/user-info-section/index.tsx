@@ -10,7 +10,7 @@ export default function UserInfoSection({ profile, isMe }: { profile: Profile; i
 
   return (
     <section>
-      <Avatar className="w-28 h-28 -translate-y-1/2 border-4 border-white">
+      <Avatar className="w-28 h-28 -translate-y-1/2 border-4 border-card">
         <AvatarImage src={image} alt={`${username} avatar`} />
         <AvatarFallback className="text-2xl">{username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
@@ -30,10 +30,12 @@ export default function UserInfoSection({ profile, isMe }: { profile: Profile; i
             iconClassName="mr-2"
           />
         </div>
-        <div>
-          <h6 className="font-semibold mb-1">Bio</h6>
-          <Bio text={bio} />
-        </div>
+        {bio?.length > 0 && (
+          <div>
+            <h6 className="font-semibold mb-1">Bio</h6>
+            <Bio text={bio} />
+          </div>
+        )}
       </div>
     </section>
   );
