@@ -35,7 +35,10 @@ export const SidebarLink = ({
       {...props}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={async () => await logout()}
+      onClick={async () => {
+        setOpen(false);
+        await logout();
+      }}
     >
       {hover ? (link.iconFilled ? link.iconFilled : link.icon) : link.icon}
 
