@@ -7,7 +7,6 @@ import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
 import { suffixS } from '@/lib/utils';
 import { likePost, unlikePost } from '@/actions/post';
 import toast from 'react-hot-toast';
-import Countup from 'react-countup';
 
 export default function ButtonLike({
   numLike,
@@ -62,14 +61,9 @@ export default function ButtonLike({
       ) : (
         <IconHeart className="mr-2" />
       )}
-      {optimisticLikeState.numLike > 0 ? (
-        <>
-          <Countup end={optimisticLikeState.numLike} className="mr-1" />
-          {suffixS('Like', optimisticLikeState.numLike)}
-        </>
-      ) : (
-        'Like'
-      )}
+      {optimisticLikeState.numLike > 0
+        ? `${optimisticLikeState.numLike} ${suffixS('Like', optimisticLikeState.numLike)}`
+        : 'Like'}
     </Button>
   );
 }
