@@ -50,7 +50,7 @@ export default function PostCardHeader({
         </HoverCardContent>
       </HoverCard>
       <time className="text-xs text-muted-foreground !m-0">
-        {format(new Date(createdAt), "PPP 'at' H:mm")}
+        {format(new Date(createdAt), "PPP 'at' HH:mm")}
       </time>
     </CardHeader>
   );
