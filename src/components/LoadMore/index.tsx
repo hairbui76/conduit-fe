@@ -58,7 +58,7 @@ export default function LoadMore({
         <PostCard key={post.slug} post={post} currentUser={currentUser} />
       ))}
       <div ref={ref} className={(cn('pb-2'), page === null ? 'hidden' : '')}>
-        <Spinner className="my-2 w-7 h-7" />
+        <Spinner className="my-2 w-7 h-7 stroke-primary" />
       </div>
       {page === null && <p>You have read all posts :)</p>}
     </>

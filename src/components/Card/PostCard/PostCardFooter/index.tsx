@@ -7,15 +7,13 @@ import { Post, PostCardType } from '@/types/Post';
 export default function PostCardFooter({
   post,
   type,
-  numComment,
   isMe
 }: {
   post: Post;
   type: PostCardType;
-  numComment: number | undefined;
   isMe: boolean;
 }) {
-  const { favoritesCount: numLike, favorited: liked, tagList, createdAt, slug } = post;
+  const { favoritesCount: numLike, favorited: liked, slug, commentsCount: numComment } = post;
 
   return (
     <CardFooter className="py-0 flex-wrap gap-2 px-4">

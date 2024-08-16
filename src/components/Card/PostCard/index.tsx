@@ -12,12 +12,10 @@ import { Profile } from '@/types/Profile';
 export default function PostCard({
   post,
   type = 'summary',
-  comments,
   currentUser = null
 }: {
   post: Post;
   type?: PostCardType;
-  comments?: Comment[];
   currentUser?: Profile | null;
 }) {
   const { author, createdAt, slug } = post;
@@ -31,10 +29,8 @@ export default function PostCard({
         <PostCardAction isMe={isMe} slug={slug} />
       </div>
       <PostCardContent post={post} type={type} />
-      <PostCardFooter numComment={comments?.length} type={type} post={post} isMe={isMe} />
-      {type === 'detail' && comments && (
-        <PostCardComment comments={comments} currentUser={currentUser} slug={slug} />
-      )}
+      <PostCardFooter type={type} post={post} isMe={isMe} />
+      <PostCardComment type={type} post={post} currentUser={currentUser} slug={slug} />
     </Card>
   );
 }

@@ -2,34 +2,46 @@
 
 import Link from 'next/link';
 
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
-import { Comment } from '@/types/Comment';
-import PostCardHeaderAvatar from '../PostCardAvatar';
-import PostCardHeader from '../PostCardHeader';
 import { Button } from '@/components/common/Button';
 import { IconChevronsDown } from '@tabler/icons-react';
 import { Separator } from '@/components/Separator';
 import CommentPost from '../CommentPost';
 import { Profile } from '@/types/Profile';
-import CommentAction from './CommentAction';
+import { Post, PostCardType } from '@/types/Post';
+import UserComment from './UserComment';
 
 export default function PostCardComment({
-  comments,
+  post,
   currentUser,
-  slug
+  slug,
+  type
 }: {
-  comments: Comment[];
+  post: Post;
   currentUser: Profile | null;
   slug: string;
+  type: PostCardType;
 }) {
   const initialNumComment = 4;
   const authenticated = !!currentUser;
   const [numComment, setNumComment] = useState(initialNumComment);
 
-  return (
+  return type === 'summary' ? (
+    post.commentsCount != 0 ? (
+      <>
+        <Separator className="mt-2 mx-auto" style={{ width: '95%' }} />
+        <UserComment
+          comment={post.firstComment}
+          currentUser={currentUser}
+          slug={slug}
+          className="mb-0 mt-5"
+        />
+      </>
+    ) : null
+  ) : (
     <>
-      {(!authenticated || comments.length !== 0) && (
+      {(!authenticated || post.commentsCount !== 0) && (
         <Separator className="mt-2 mx-auto" style={{ width: '95%' }} />
       )}
       {authenticated ? (
@@ -42,27 +54,10 @@ export default function PostCardComment({
           </Button>
         </div>
       )}
-      {comments.slice(0, numComment).map(comment => {
-        const { id, author, createdAt, body } = comment;
-        const isMe = currentUser !== null && author.username === currentUser.username;
-        return (
-          <div key={id} className="flex gap-3 px-4 mb-5">
-            <PostCardHeaderAvatar author={author} />
-            <div className="border px-4 py-3 rounded-lg">
-              <PostCardHeader author={author} createdAt={createdAt} isMe={isMe} />
-              <div className="mt-2">
-                {body.split('\\n').map((paragraph, index) => (
-                  <Fragment key={`comment-${id}-paragraph-${index}`}>
-                    <p className="col-start-2 break-words">{paragraph}</p>
-                  </Fragment>
-                ))}
-              </div>
-            </div>
-            <CommentAction isMe={isMe} slug={slug} commentId={id} />
-          </div>
-        );
-      })}
-      {numComment < comments.length && (
+      {post.comments.slice(0, numComment).map(comment => (
+        <UserComment key={comment.id} comment={comment} currentUser={currentUser} slug={slug} />
+      ))}
+      {numComment < post.commentsCount && (
         <div className="text-center">
           <Button
             variant="ghost"

@@ -16,7 +16,7 @@ export async function getPosts(
   const limit = options.limit || 5;
   const token = cookies().get('AUTH_TOKEN')?.value;
 
-  const response = await fetch(
+  const postsResponse = await fetch(
     `${url}?limit=${limit}&page=${options.page || ''}&favorited=${options.liked || ''}&author=${options.author || ''}${options.tag ? `&tag=${options.tag}` : ''}`,
     {
       headers: {
@@ -25,17 +25,39 @@ export async function getPosts(
       next: { tags: ['posts'] }
     }
   );
-  if (!response.ok) {
+  if (!postsResponse.ok) {
     throw new Error('Could not get posts.');
   }
 
-  const data: { articles: Post[]; articlesCount: number; page: number } = await response.json();
+  const postsData: { articles: Post[]; articlesCount: number; page: number } =
+    await postsResponse.json();
+
+  const commentsData: { comments: Comment[] }[] = await Promise.all(
+    postsData.articles.map(article =>
+      fetch(`${process.env.BACKEND_URL}/api/articles/${article.slug}/comments`, {
+        next: { tags: [`${article.slug}-comments`] }
+      }).then(r => {
+        if (!r.ok) {
+          throw new Error(`Could not get ${article.slug} comments.`);
+        }
+        return r.json();
+      })
+    )
+  );
+
+  const { articles, articlesCount, page } = postsData;
+
+  articles.forEach((article, index) => {
+    const comments = commentsData[index].comments;
+    article.commentsCount = comments.length;
+    article.firstComment = comments.length > 0 ? comments[0] : null;
+  });
 
   return {
-    posts: data.articles,
-    postsCount: data.articlesCount,
-    page: data.page,
-    nextPage: data.page * limit >= data.articlesCount ? null : data.page + 1
+    posts: articles,
+    postsCount: articlesCount,
+    page: page,
+    nextPage: page * limit >= articlesCount ? null : page + 1
   };
 }
 
@@ -57,12 +79,15 @@ export async function getSinglePost(slug: string) {
     return null;
   }
 
-  const [postData, commentsData] = await Promise.all([
-    postResponse.json(),
-    commentsResponse.json()
-  ]);
+  const [postData, commentsData]: [
+    postData: { article: Post },
+    commentData: { comments: Comment[] }
+  ] = await Promise.all([postResponse.json(), commentsResponse.json()]);
 
-  return { post: postData.article as Post, comments: commentsData.comments as Comment[] };
+  const post = postData.article;
+  post.comments = commentsData.comments;
+  post.commentsCount = commentsData.comments.length;
+  return post;
 }
 
 export async function createPost(createPostFormData: z.infer<typeof PostSchema>) {

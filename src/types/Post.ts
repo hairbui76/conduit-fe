@@ -1,3 +1,4 @@
+import { Comment } from './Comment';
 import { Profile } from './Profile';
 
 export type Post = {
@@ -10,7 +11,10 @@ export type Post = {
   updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
+  commentsCount: number;
+  firstComment: Comment | null;
   author: Profile;
+  comments: Comment[];
 };
 
 export type PostCardType = 'detail' | 'summary';
