@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/actions/user';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
-import { Card } from '@/components/common/Card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
+import { Card } from '@/components/Card';
 import CreatePostDialog from '@/components/Dialog/CreatePostDialog';
 
 export default async function CreatePostSection() {

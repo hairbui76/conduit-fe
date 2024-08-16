@@ -11,8 +11,8 @@ export const PostSchema = z.object({
     .min(1, {
       message: 'Content must not be empty.'
     })
-    .max(500, {
-      message: 'Content must not be longer than 500 characters'
+    .max(1000, {
+      message: 'Content must not be longer than 1000 characters'
     }),
   tagList: z.string().trim()
 });

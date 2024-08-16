@@ -5,7 +5,7 @@ import '../styles/globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'react-hot-toast';
 import ProgressBarProvider from '@/contexts/progressbar';
-import { Sidebar } from '@/components/Sidebar';
+import { Sidebar } from '@/containers/sidebar';
 import MainSection from '@/containers/root-page';
 import { ThemeProvider } from '@/contexts/theme';
 

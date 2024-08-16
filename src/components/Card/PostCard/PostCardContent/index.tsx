@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 
 import Tag from '@/components/Tag';
-import { CardContent } from '@/components/common/Card';
+import { CardContent } from '@/components/Card';
 import { Post, PostCardType } from '@/types/Post';
 import { uniqArray } from '@/lib/utils';
 

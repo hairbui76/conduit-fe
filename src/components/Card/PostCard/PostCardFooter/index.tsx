@@ -1,7 +1,7 @@
-import ButtonComment from '@/components/Button/ButtonComment';
-import ButtonEditPost from '@/components/Button/ButtonEditPost';
-import ButtonLike from '@/components/Button/ButtonLike';
-import { CardFooter } from '@/components/common/Card';
+import ButtonComment from './ButtonComment';
+import ButtonLike from './ButtonLike';
+import ButtonEditPost from './ButtonEditPost';
+import { CardFooter } from '@/components/Card';
 import { Post, PostCardType } from '@/types/Post';
 
 export default function PostCardFooter({

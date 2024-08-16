@@ -5,21 +5,14 @@ import { useTransition } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/common/Form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/Form';
 import { UpdateProfileSchema } from '@/forms/update-user-form';
 import { Profile } from '@/types/Profile';
-import { Button } from '@/components/common/Button';
-import { Input } from '@/components/common/Input';
+import { Button } from '@/components/Button';
+import { Input } from '@/components/Input';
 import { updateProfile } from '@/actions/user';
 import toast from 'react-hot-toast';
-import Spinner from '@/components/common/Spinner';
+import Spinner from '@/components/Spinner';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
 
 export default function ProfileSettingsSection({ currentUser }: { currentUser: Profile | null }) {

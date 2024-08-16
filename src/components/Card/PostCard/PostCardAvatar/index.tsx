@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
 import { Profile } from '@/types/Profile';
 
 export default function PostCardHeaderAvatar({ author }: { author: Profile }) {

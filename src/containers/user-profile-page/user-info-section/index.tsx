@@ -2,7 +2,7 @@ import Bio from '@/components/Bio';
 import ButtonCopy from '@/components/Button/ButtonCopy';
 import ButtonEditProfile from '@/components/Button/ButtonEditProfile';
 import ButtonFollow from '@/components/Button/ButtonFollow';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
 import { Profile } from '@/types/Profile';
 
 export default function UserInfoSection({ profile, isMe }: { profile: Profile; isMe: boolean }) {

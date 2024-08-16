@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 import { format } from 'date-fns';
-import { CardHeader } from '@/components/common/Card';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../HoverCard';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/common/Avatar';
+import { CardHeader } from '@/components/Card';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from './HoverCard';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
 import { Profile } from '@/types/Profile';
 import ButtonFollow from '@/components/Button/ButtonFollow';
 import ButtonEditProfile from '@/components/Button/ButtonEditProfile';

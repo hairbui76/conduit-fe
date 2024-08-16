@@ -1,5 +1,5 @@
-import { LoginCard } from '@/components/Card/LoginCard';
-import { SignupCard } from '@/components/Card/SignupCard';
+import { LoginCard } from './components/LoginCard';
+import { SignupCard } from './components/SignupCard';
 
 export default function Authentication({ page }: { page: 'login' | 'signup' }) {
   return (

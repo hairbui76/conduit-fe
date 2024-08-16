@@ -1,6 +1,6 @@
 import ButtonCopy from '@/components/Button/ButtonCopy';
-import ButtonDeletePost from '@/components/Button/ButtonDeletePost';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
+import ButtonDeletePost from './ButtonDeletePost';
 import {
   DropdownMenu,
   DropdownMenuContent,

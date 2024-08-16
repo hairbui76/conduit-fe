@@ -1,7 +1,7 @@
 import { Profile } from '@/types/Profile';
 
 import PostCard from '../Card/PostCard';
-import LoadMore from '../LoadMore';
+import LoadMore from './LoadMore';
 import { Post } from '@/types/Post';
 
 export default async function Posts({

@@ -2,11 +2,11 @@
 
 import { useTransition } from 'react';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import { followUser, unfollowUser } from '@/actions/user';
 import toast from 'react-hot-toast';
 import { IconBellRinging2, IconPlus } from '@tabler/icons-react';
-import Spinner from '@/components/common/Spinner';
+import Spinner from '@/components/Spinner';
 
 export default function ButtonFollow({
   username,

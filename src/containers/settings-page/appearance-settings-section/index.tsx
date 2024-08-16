@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/common/Form';
-import { RadioGroup, RadioGroupItem } from '@/components/common/RadioGroup';
+} from '@/components/Form';
+import { RadioGroup, RadioGroupItem } from '@/components/RadioGroup';
 import { AppearanceSchema } from '@/forms/theme-form';
 import { useTheme } from 'next-themes';
 

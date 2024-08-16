@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import {
   Form,
   FormControl,
@@ -11,9 +11,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/common/Form';
-import { Input } from '@/components/common/Input';
-import { Textarea } from '@/components/common/TextArea';
+} from '@/components/Form';
+import { Input } from '@/components/Input';
+import { Textarea } from '@/components/TextArea';
 import {
   Dialog,
   DialogClose,
@@ -30,7 +30,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { createPost } from '@/actions/post';
 import toast from 'react-hot-toast';
-import Spinner from '@/components/common/Spinner';
+import Spinner from '@/components/Spinner';
 
 export default function CreatePostDialog() {
   const [pending, startTransition] = useTransition();
@@ -129,7 +129,7 @@ export default function CreatePostDialog() {
                     <Textarea
                       {...field}
                       className="resize-none"
-                      maxLength={500}
+                      maxLength={1000}
                       disabled={pending}
                     />
                   </FormControl>

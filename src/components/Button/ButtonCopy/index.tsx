@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import { IconLink } from '@tabler/icons-react';
 import toast from 'react-hot-toast';
 

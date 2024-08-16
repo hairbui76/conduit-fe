@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '@/components/common/Button';
-import { Card, CardContent } from '@/components/common/Card';
+import { Button } from '@/components/Button';
+import { Card, CardContent } from '@/components/Card';
 import { cn } from '@/lib/utils';
 
 export default function NeedAuthCard({

@@ -1,5 +1,5 @@
-import ButtonDeleteComment from '@/components/Button/ButtonDeleteComment';
-import { Button } from '@/components/common/Button';
+import ButtonDeleteComment from './ButtonDeleteComment';
+import { Button } from '@/components/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,

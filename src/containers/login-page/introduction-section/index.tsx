@@ -1,8 +1,7 @@
-import Link from 'next/link';
-
 import { cn } from '@/lib/utils';
-import LoginPageBackground from '@/components/Background/LoginPageBackground';
-import { Button } from '@/components/common/Button';
+import LoginPageBackground from './components/LoginPageBackground';
+import ButtonGoHome from './components/ButtonGoHome';
+import ButtonAuthenticate from './components/ButtonAuthenticate';
 
 export default function Introduction({ page }: { page: 'login' | 'signup' }) {
   return (
@@ -14,12 +13,8 @@ export default function Introduction({ page }: { page: 'login' | 'signup' }) {
         Connecting Ideas, Sharing Stories
       </p>
       <div className="z-20 mt-4 relative flex items-center">
-        <Button>
-          <Link href="/">Start Explore</Link>
-        </Button>
-        <Button variant="outline" className="ml-4 lg:hidden">
-          <Link href={`#${page}-form`}>{page === 'login' ? 'Login' : 'Sign up'}</Link>
-        </Button>
+        <ButtonGoHome />
+        <ButtonAuthenticate page={page} />
       </div>
     </div>
   );

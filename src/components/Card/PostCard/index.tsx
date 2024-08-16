@@ -4,7 +4,7 @@ import PostCardHeader from './PostCardHeader';
 import PostCardContent from './PostCardContent';
 import PostCardFooter from './PostCardFooter';
 import PostCardAction from './PostCardAction';
-import { Card } from '@/components/common/Card';
+import { Card } from '@/components/Card';
 import { Comment } from '@/types/Comment';
 import PostCardComment from './PostCardComment';
 import { Profile } from '@/types/Profile';

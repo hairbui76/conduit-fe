@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import { TabName } from '..';
 import { capitalize } from 'lodash';
 

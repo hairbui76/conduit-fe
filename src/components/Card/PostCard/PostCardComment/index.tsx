@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import { IconChevronsDown } from '@tabler/icons-react';
 import { Separator } from '@/components/Separator';
 import CommentPost from '../CommentPost';

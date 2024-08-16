@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/Button';
 import { cn } from '@/lib/utils';
 import { IconEdit, IconPencil } from '@tabler/icons-react';
 
