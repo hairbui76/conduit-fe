@@ -34,19 +34,21 @@ export default async function Posts({
 }) {
   const postsData = await fn(fetchUrl, { page: 1, ...options });
 
+  if (postsData.postsCount === 0) {
+    return <p>No post to read :)</p>;
+  }
+
   return (
     <>
-      <>
-        {postsData.posts.map(post => (
-          <PostCard key={post.slug} post={post} currentUser={currentUser} />
-        ))}
+      {postsData.posts.map(post => (
+        <PostCard key={post.slug} post={post} currentUser={currentUser} />
+      ))}
 
-        {postsData.nextPage ? (
-          <LoadMore fetchUrl={fetchUrl} fn={fn} options={options} currentUser={currentUser} />
-        ) : (
-          <p>You have read all posts :)</p>
-        )}
-      </>
+      {postsData.nextPage ? (
+        <LoadMore fetchUrl={fetchUrl} fn={fn} options={options} currentUser={currentUser} />
+      ) : (
+        <p>You have read all posts :)</p>
+      )}
     </>
   );
 }

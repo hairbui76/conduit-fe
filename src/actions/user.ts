@@ -29,8 +29,8 @@ export async function createUser(signupFormData: z.infer<typeof SignupSchema>) {
     | { errors: { username?: string; email?: string } } = await response.json();
   if (!response.ok) {
     if ('errors' in data) {
-      if (data.errors.email) throw new Error('Email is already used.');
-      if (data.errors.username) throw new Error('Username is already used.');
+      if (data.errors.email) return { error: `Email ${data.errors.email}` };
+      if (data.errors.username) return { error: `Username ${data.errors.username}` };
     }
   }
 }
@@ -57,7 +57,7 @@ export async function followUser(username: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to follow this user');
+    return { error: 'You need login to follow this user' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/profiles/${username}/follow`, {
@@ -68,7 +68,7 @@ export async function followUser(username: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not follow this user');
+    return { error: 'Could not follow this user' };
   }
 
   revalidateTag('posts');
@@ -79,7 +79,7 @@ export async function unfollowUser(username: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to unfollow this user');
+    return { error: 'You need login to follow this user' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/profiles/${username}/follow`, {
@@ -90,7 +90,7 @@ export async function unfollowUser(username: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not unfollow this user');
+    return { error: 'Could not unfollow this user' };
   }
 
   revalidateTag('posts');
@@ -122,7 +122,7 @@ export async function updateProfile(updateProfileFormData: z.infer<typeof Update
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to update profile');
+    return { error: 'You need login to update profile' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
@@ -137,7 +137,7 @@ export async function updateProfile(updateProfileFormData: z.infer<typeof Update
   });
 
   if (!response.ok) {
-    throw new Error('Could not update profile');
+    return { error: 'Could not update profile' };
   }
 
   revalidatePath('/');
@@ -147,7 +147,7 @@ export async function updatePassword(newPassword: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to change your password');
+    return { error: 'You need login to change your password' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
@@ -164,7 +164,7 @@ export async function updatePassword(newPassword: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not change your password');
+    return { error: 'Could not change your password' };
   }
 
   const data: {

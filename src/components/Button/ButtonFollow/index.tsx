@@ -25,10 +25,9 @@ export default function ButtonFollow({
     const fn = following ? unfollowUser : followUser;
 
     startTrasition(async () => {
-      try {
-        await fn(username);
-      } catch (err) {
-        toast.error(err instanceof Error ? err.message : 'Something went wrong. Try again later', {
+      const response = await fn(username);
+      if (response?.error) {
+        toast.error(response.error, {
           position: 'top-center'
         });
       }

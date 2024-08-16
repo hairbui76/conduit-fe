@@ -29,13 +29,13 @@ export default function AccountSettingsSection({ currentUser }: { currentUser: P
 
   function onSubmit(updatePasswordFormData: z.infer<typeof UpdatePassWordSchema>) {
     startTransition(async () => {
-      try {
-        await updatePassword(updatePasswordFormData.password);
-        toast.success(() => <p className="w-max">Your password was changed</p>, {
+      const response = await updatePassword(updatePasswordFormData.password);
+      if (response?.error) {
+        toast.error(response.error, {
           position: 'top-center'
         });
-      } catch (err) {
-        toast.error(err instanceof Error ? err.message : 'Something went wrong. Try again later.', {
+      } else {
+        toast.success(() => <p className="w-max">Your password was changed</p>, {
           position: 'top-center'
         });
       }

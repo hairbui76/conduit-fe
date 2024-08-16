@@ -31,13 +31,13 @@ export default function ProfileSettingsSection({ currentUser }: { currentUser: P
 
   function onSubmit(updateProfileFormData: z.infer<typeof UpdateProfileSchema>) {
     startTransition(async () => {
-      try {
-        await updateProfile(updateProfileFormData);
-        toast.success(() => <p className="w-max">Your profile was updated successfully</p>, {
+      const response = await updateProfile(updateProfileFormData);
+      if (response?.error) {
+        toast.error(response.error, {
           position: 'top-center'
         });
-      } catch (err) {
-        toast.error(err instanceof Error ? err.message : 'Something went wrong. Try again later.', {
+      } else {
+        toast.success(() => <p className="w-max">Your profile was updated successfully</p>, {
           position: 'top-center'
         });
       }

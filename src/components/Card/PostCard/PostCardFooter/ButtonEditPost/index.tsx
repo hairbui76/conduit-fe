@@ -52,23 +52,19 @@ export default function ButtonEditPost({ post }: { post: Post }) {
 
   function onUpdatePost(updatePostFormData: z.infer<typeof PostSchema>) {
     startTransition(async () => {
-      try {
-        await updatePost({ updatePostFormData, slug });
+      const response = await updatePost({ updatePostFormData, slug });
+      if (response?.error) {
+        toast.error(response.error, {
+          style: { marginRight: '16px' },
+          position: 'top-right'
+        });
+      } else {
         toast.success('Post was updated successfully', {
           style: { marginRight: '16px' },
           position: 'top-right'
         });
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : 'Something went wrong. Try again later',
-          {
-            style: { marginRight: '16px' },
-            position: 'top-right'
-          }
-        );
-      } finally {
-        setOpen(false);
       }
+      setOpen(false);
     });
   }
 

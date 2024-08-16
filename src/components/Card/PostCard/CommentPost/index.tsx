@@ -22,13 +22,13 @@ export default function CommentPost({ currentUser, slug }: { currentUser: Profil
 
   function onSubmit(data: z.infer<typeof CommentSchema>) {
     startTransition(async () => {
-      try {
-        await commentPost({ slug, comment: insertNewLine(data.comment) });
-        form.setValue('comment', '');
-      } catch (err) {
-        toast.error(err instanceof Error ? err.message : 'Something went wrong. Try again later', {
+      const response = await commentPost({ slug, comment: insertNewLine(data.comment) });
+      if (response?.error) {
+        toast.error(response.error, {
           position: 'top-center'
         });
+      } else {
+        form.setValue('comment', '');
       }
     });
   }

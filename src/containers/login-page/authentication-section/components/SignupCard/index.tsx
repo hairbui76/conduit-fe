@@ -37,8 +37,14 @@ export function SignupCard() {
 
   function onSignup(signupFormData: z.infer<typeof SignupSchema>) {
     startTransition(async () => {
-      try {
-        await createUser(signupFormData);
+      const response = await createUser(signupFormData);
+      if (response?.error) {
+        toast.error(response.error, {
+          style: {
+            marginRight: '16px'
+          }
+        });
+      } else {
         toast.success('Account was successfully created.', {
           style: {
             marginRight: '16px'
@@ -47,15 +53,6 @@ export function SignupCard() {
         signupForm.setValue('username', '');
         signupForm.setValue('email', '');
         signupForm.setValue('password', '');
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : 'Something went wrong. Try again later.',
-          {
-            style: {
-              marginRight: '16px'
-            }
-          }
-        );
       }
     });
   }

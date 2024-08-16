@@ -37,22 +37,23 @@ export default function ButtonLike({
       }}
       onMouseLeave={() => setHover(false)}
       onClick={async () => {
-        try {
-          const { liked } = optimisticLikeState;
-          if (liked) {
-            optimisticLikePost('unlike');
-            await unlikePost(slug);
-          } else {
-            optimisticLikePost('like');
-            await likePost(slug);
-          }
-        } catch (error) {
-          toast.error(
-            error instanceof Error ? error.message : 'Something went wrong. Try again later',
-            {
+        const { liked } = optimisticLikeState;
+        if (liked) {
+          optimisticLikePost('unlike');
+          const response = await unlikePost(slug);
+          if (response?.error) {
+            toast.error(response.error, {
               position: 'top-center'
-            }
-          );
+            });
+          }
+        } else {
+          optimisticLikePost('like');
+          const response = await likePost(slug);
+          if (response?.error) {
+            toast.error(response.error, {
+              position: 'top-center'
+            });
+          }
         }
       }}
     >

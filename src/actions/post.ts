@@ -4,7 +4,7 @@ import { PostSchema } from '@/forms/create-form';
 import { insertNewLine } from '@/lib/utils';
 import { Comment } from '@/types/Comment';
 import { Post } from '@/types/Post';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -94,7 +94,7 @@ export async function createPost(createPostFormData: z.infer<typeof PostSchema>)
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to create post');
+    return { error: 'You need login to create post' };
   }
 
   const postBody = processPostFormData(createPostFormData);
@@ -111,12 +111,13 @@ export async function createPost(createPostFormData: z.infer<typeof PostSchema>)
   });
 
   if (!response.ok) {
-    throw new Error('Could not create post');
+    return { error: 'Could not create post' };
   }
 
   const slug: string | null | undefined = (await response.json())?.article?.slug;
   if (!!slug) {
     revalidateTag('posts');
+    revalidateTag('tags');
     redirect(`/post/${slug}`);
   }
 }
@@ -131,7 +132,7 @@ export async function updatePost({
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to update post');
+    return { error: 'You need login to update post' };
   }
 
   const putBody = processPostFormData(updatePostFormData);
@@ -148,17 +149,18 @@ export async function updatePost({
   });
 
   if (!response.ok) {
-    throw new Error('Could not update post');
+    return { error: 'Could not update post' };
   }
 
   revalidateTag('posts');
+  revalidateTag('tags');
 }
 
 export async function deletePost(slug: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to delete post');
+    return { error: 'You need login to delete post' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}`, {
@@ -169,17 +171,18 @@ export async function deletePost(slug: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not delete post');
+    return { error: 'Could not delete post' };
   }
 
   revalidateTag('posts');
+  revalidateTag('tags');
 }
 
 export async function likePost(slug: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to like this post');
+    return { error: 'You need login to like this post' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}/favorite`, {
@@ -190,11 +193,10 @@ export async function likePost(slug: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not like this post');
+    return { error: 'Could not like this post' };
   }
 
   revalidateTag('posts');
-  revalidateTag('tags');
   revalidateTag(slug);
 }
 
@@ -202,7 +204,7 @@ export async function unlikePost(slug: string) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to unlike this post');
+    return { error: 'You need login to unlike this post' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}/favorite`, {
@@ -213,10 +215,10 @@ export async function unlikePost(slug: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Could not unlike this post');
+    return { error: 'Could not unlike this post' };
   }
 
-  revalidate('posts');
+  revalidateTag('posts');
   revalidateTag(slug);
 }
 
@@ -224,7 +226,7 @@ export async function commentPost({ slug, comment }: { slug: string; comment: st
   const token = cookies().get('AUTH_TOKEN')?.value;
 
   if (!token) {
-    throw new Error('You need login to comment this post');
+    return { error: 'You need login to comment this post' };
   }
 
   const response = await fetch(`${process.env.BACKEND_URL}/api/articles/${slug}/comments`, {
@@ -241,7 +243,7 @@ export async function commentPost({ slug, comment }: { slug: string; comment: st
   });
 
   if (!response.ok) {
-    throw new Error('Could not comment this post');
+    return { error: 'Could not comment this post' };
   }
 
   revalidateTag(`${slug}-comments`);
@@ -269,10 +271,6 @@ export async function deleteComment({ slug, commentId }: { slug: string; comment
   }
 
   revalidateTag(`${slug}-comments`);
-}
-
-export async function revalidate(path: string) {
-  revalidatePath(path, 'layout');
 }
 
 function processPostFormData(formData: z.infer<typeof PostSchema>): {

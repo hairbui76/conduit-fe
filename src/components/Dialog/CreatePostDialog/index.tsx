@@ -47,14 +47,11 @@ export default function CreatePostDialog() {
 
   function onCreatePost(createPostFormData: z.infer<typeof PostSchema>) {
     startTransition(async () => {
-      try {
-        await createPost(createPostFormData);
+      const response = await createPost(createPostFormData);
+      if (response?.error) {
+        toast.error(response.error, { position: 'top-center' });
+      } else {
         toast.success('Post was created successfully', { position: 'top-center' });
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : 'Something went wrong. Try again later',
-          { position: 'top-center' }
-        );
       }
     });
   }
