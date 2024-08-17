@@ -49,7 +49,7 @@ export const SidebarLink = ({
         }}
         className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0 !ml-3"
       >
-        <span className={`${hover && 'font-semibold'}`}>{link.label}</span>
+        <span className={`${(hover || isActive) && 'font-semibold'}`}>{link.label}</span>
       </motion.div>
     </span>
   ) : (
@@ -72,7 +72,7 @@ export const SidebarLink = ({
           }}
           className="dark:text-neutral-200 group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block text-sm !p-0 !m-0 !ml-3"
         >
-          <span className={`${hover && 'font-semibold'}`}>{link.label}</span>
+          <span className={`${(hover || isActive) && 'font-semibold'}`}>{link.label}</span>
         </motion.div>
       </Link>
     </div>
