@@ -1,4 +1,4 @@
-import { getTags } from '@/actions/tag';
+import { getTags } from '@/data/tag';
 import TagsCard from './components/TagsCard';
 import MobileTags from './components/MobileTags';
 

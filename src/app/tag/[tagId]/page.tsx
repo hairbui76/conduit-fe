@@ -1,4 +1,4 @@
-import { getTags } from '@/actions/tag';
+import { getTags } from '@/data/tag';
 import TaggedPostsSection from '@/containers/tagId-page/posts-section';
 import TagsSection from '@/containers/tags';
 

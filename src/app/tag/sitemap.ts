@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-import { getTags } from '@/actions/tag';
+import { getTags } from '@/data/tag';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tags = await getTags();

@@ -8,33 +8,24 @@ import { useInView } from 'react-intersection-observer';
 import { Profile } from '@/types/Profile';
 import PostCard from '@/components/Card/PostCard';
 import Spinner from '@/components/Spinner';
+import { getPosts } from '@/data/post';
 
 export default function LoadMore({
   fetchUrl,
-  fn,
   options,
-  currentUser
+  currentUser,
+  token,
+  backendUrl
 }: {
   fetchUrl: string;
-  fn: (
-    url: string,
-    options: {
-      page?: number;
-      liked?: string;
-      author?: string;
-    }
-  ) => Promise<{
-    posts: Post[];
-    postsCount: number;
-    page: number;
-    nextPage: number | null;
-  }>;
   options?: {
     page?: number;
     liked?: string;
     author?: string;
   };
   currentUser: Profile | null;
+  token: string | undefined;
+  backendUrl: string;
 }) {
   const { ref, inView } = useInView();
   const [posts, setPosts] = useState<Post[]>([]);
@@ -43,14 +34,14 @@ export default function LoadMore({
   useEffect(() => {
     if (inView) {
       if (page === null) return;
-      fn(fetchUrl, { page: page ?? 0, ...options })
+      getPosts(fetchUrl, { page: page ?? 0, ...options }, token, backendUrl)
         .then(res => {
           setPosts([...posts, ...res.posts]);
           setPage(res.nextPage);
         })
         .catch(() => setPage(null));
     }
-  }, [inView, posts, fetchUrl, page, fn, options]);
+  }, [inView, posts, fetchUrl, page, options, token, backendUrl]);
 
   return (
     <>

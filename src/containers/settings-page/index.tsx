@@ -1,4 +1,6 @@
-import { getCurrentUser } from '@/actions/user';
+import { cookies } from 'next/headers';
+
+import { getCurrentUser } from '@/data/user';
 import SettingsSection from './settings-section';
 import Sidebar from './sidebar-section';
 import { Card } from '@/components/Card';
@@ -9,7 +11,7 @@ const tabNames = ['profile', 'account', 'appearance'] as const;
 export type TabName = (typeof tabNames)[number];
 
 export default async function SettingsContainer() {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser(cookies().get('AUTH_TOKEN')?.value);
 
   return (
     <Card className="px-10 py-12 sm:w-[600px] md:w-[670px] lg:w-[900px] h-fit">

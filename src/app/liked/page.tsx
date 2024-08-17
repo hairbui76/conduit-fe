@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
 
-import { getCurrentUser } from '@/actions/user';
 import LikedPostsSection from '@/containers/liked-page/posts-section';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
 import TagsSection from '@/containers/tags';
+import { getCurrentUser } from '@/data/user';
 
 export const metadata: Metadata = {
   title: 'Liked',
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser(cookies().get('AUTH_TOKEN')?.value);
   if (!currentUser) {
     return (
       <NeedAuthCard

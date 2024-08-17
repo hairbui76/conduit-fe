@@ -4,7 +4,6 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
 import { SignupSchema } from '@/forms/signup-form';
-import { Profile } from '@/types/Profile';
 import { z } from 'zod';
 import { UpdateProfileSchema } from '@/forms/update-user-form';
 import { login } from './auth';
@@ -33,24 +32,6 @@ export async function createUser(signupFormData: z.infer<typeof SignupSchema>) {
       if (data.errors.username) return { error: `Username ${data.errors.username}` };
     }
   }
-}
-
-export async function getCurrentUser() {
-  const token = cookies().get('AUTH_TOKEN')?.value;
-
-  if (!token) return null;
-
-  const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  if (!response.ok) return null;
-
-  const currentUser: { user: Profile } = await response.json();
-
-  return currentUser.user;
 }
 
 export async function followUser(username: string) {
@@ -95,27 +76,6 @@ export async function unfollowUser(username: string) {
 
   revalidateTag('posts');
   revalidateTag(username);
-}
-
-export async function getProfile(username: string) {
-  const token = cookies().get('AUTH_TOKEN')?.value;
-
-  const response = await fetch(`${process.env.BACKEND_URL}/api/profiles/${username}`, {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : ''
-    },
-    next: {
-      tags: [username]
-    }
-  });
-
-  if (!response.ok) {
-    return null;
-  }
-
-  const data: { profile: Profile } = await response.json();
-
-  return data.profile;
 }
 
 export async function updateProfile(updateProfileFormData: z.infer<typeof UpdateProfileSchema>) {

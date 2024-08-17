@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
 
-import { getSinglePost } from '@/actions/post';
 import SinglePostSection from '@/containers/single-post-page/single-post-section';
+import { cookies } from 'next/headers';
+import { getSinglePost } from '@/data/post';
 
 export const generateMetadata = async ({ params }: { params: { postSlug: string } }) => {
-  const post = await getSinglePost(params.postSlug);
+  const post = await getSinglePost(params.postSlug, cookies().get('AUTH_TOKEN')?.value);
 
   if (!post)
     return {
@@ -28,7 +29,7 @@ export const generateMetadata = async ({ params }: { params: { postSlug: string 
 };
 
 export default async function Page({ params }: { params: { postSlug: string } }) {
-  const post = await getSinglePost(params.postSlug);
+  const post = await getSinglePost(params.postSlug, cookies().get('AUTH_TOKEN')?.value);
 
   if (post === null) {
     notFound();

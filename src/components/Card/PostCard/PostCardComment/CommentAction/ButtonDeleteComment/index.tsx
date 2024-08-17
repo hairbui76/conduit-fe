@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteComment } from '@/actions/post';
+import { deleteComment } from '@/actions/comment';
 import { Button } from '@/components/Button';
 import { IconTrash } from '@tabler/icons-react';
 import toast from 'react-hot-toast';

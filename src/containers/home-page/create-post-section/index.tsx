@@ -1,10 +1,12 @@
-import { getCurrentUser } from '@/actions/user';
+import { cookies } from 'next/headers';
+
+import { getCurrentUser } from '@/data/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
 import { Card } from '@/components/Card';
 import CreatePostDialog from '@/components/Dialog/CreatePostDialog';
 
 export default async function CreatePostSection() {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser(cookies().get('AUTH_TOKEN')?.value);
   if (!currentUser) return null;
 
   const { username, image } = currentUser;

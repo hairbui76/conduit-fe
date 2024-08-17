@@ -10,7 +10,7 @@ import { Textarea } from '@/components/TextArea';
 import { CommentSchema } from '@/forms/comment-form';
 import { Profile } from '@/types/Profile';
 import PostCardHeaderAvatar from '../PostCardAvatar';
-import { commentPost } from '@/actions/post';
+import { commentPost } from '@/actions/comment';
 import toast from 'react-hot-toast';
 import { insertNewLine } from '@/lib/utils';
 

@@ -1,14 +1,16 @@
 import { notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
 
-import { getCurrentUser, getProfile } from '@/actions/user';
 import { Card, CardContent, CardHeader } from '@/components/Card';
 import UserInfoSection from '@/containers/user-profile-page/user-info-section';
 import BackgroundSection from '@/containers/user-profile-page/background-section';
 import RecentPost from '@/containers/user-profile-page/posts-section';
+import { getCurrentUser, getProfile } from '@/data/user';
 
 export const generateMetadata = async ({ params }: { params: { username: string } }) => {
+  const token = cookies().get('AUTH_TOKEN')?.value;
   const { username } = params;
-  const profile = await getProfile(username);
+  const profile = await getProfile(username, token);
   if (profile === null) {
     return {
       title: 'User not found',
@@ -16,7 +18,7 @@ export const generateMetadata = async ({ params }: { params: { username: string 
     };
   }
 
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser(token);
   const isMe = currentUser !== null && currentUser.username === profile.username;
 
   return isMe
@@ -33,11 +35,11 @@ export const generateMetadata = async ({ params }: { params: { username: string 
 
 export default async function Page({ params }: { params: { username: string } }) {
   const { username } = params;
-  const profile = await getProfile(username);
+  const profile = await getProfile(username, cookies().get('AUTH_TOKEN')?.value);
   if (profile === null) {
     notFound();
   }
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser(cookies().get('AUTH_TOKEN')?.value);
   const isMe = currentUser !== null && currentUser.username === profile.username;
 
   return (

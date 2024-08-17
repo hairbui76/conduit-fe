@@ -1,29 +1,16 @@
-import { Profile } from '@/types/Profile';
+import { cookies } from 'next/headers';
 
+import { Profile } from '@/types/Profile';
 import PostCard from '../Card/PostCard';
 import LoadMore from './LoadMore';
-import { Post } from '@/types/Post';
+import { getPosts } from '@/data/post';
 
 export default async function Posts({
   fetchUrl,
-  fn,
   options,
   currentUser
 }: {
   fetchUrl: string;
-  fn: (
-    url: string,
-    options: {
-      page?: number;
-      liked?: string;
-      author?: string;
-    }
-  ) => Promise<{
-    posts: Post[];
-    postsCount: number;
-    page: number;
-    nextPage: number | null;
-  }>;
   options?: {
     page?: number;
     liked?: string;
@@ -32,7 +19,8 @@ export default async function Posts({
   };
   currentUser: Profile | null;
 }) {
-  const postsData = await fn(fetchUrl, { page: 1, ...options });
+  const token = cookies().get('AUTH_TOKEN')?.value;
+  const postsData = await getPosts(fetchUrl, { page: 1, ...options }, token);
 
   if (postsData.postsCount === 0) {
     return <p>No post to read :)</p>;
@@ -45,7 +33,13 @@ export default async function Posts({
       ))}
 
       {postsData.nextPage ? (
-        <LoadMore fetchUrl={fetchUrl} fn={fn} options={options} currentUser={currentUser} />
+        <LoadMore
+          fetchUrl={fetchUrl}
+          options={options}
+          currentUser={currentUser}
+          token={token}
+          backendUrl={process.env.BACKEND_URL!}
+        />
       ) : (
         <p>You have read all posts :)</p>
       )}

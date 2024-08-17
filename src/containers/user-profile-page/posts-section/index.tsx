@@ -1,6 +1,5 @@
 import { default as PostsContainer } from '@/containers/posts';
 import Posts from '@/components/Posts';
-import { getPosts } from '@/actions/post';
 import { Profile } from '@/types/Profile';
 
 export default function RecentPost({
@@ -16,7 +15,6 @@ export default function RecentPost({
       <PostsContainer className="w-full sm:w-full">
         <Posts
           fetchUrl={`${process.env.BACKEND_URL}/api/articles`}
-          fn={getPosts}
           options={{ author: username }}
           currentUser={currentUser}
         />
