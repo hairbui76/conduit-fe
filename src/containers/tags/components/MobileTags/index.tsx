@@ -7,7 +7,7 @@ import { IconTag } from '@tabler/icons-react';
 export default function MobileTags({ children }: { children: React.ReactNode }) {
   return (
     <Popover>
-      <PopoverTrigger className="lg:hidden fixed right-6 bottom-4">
+      <PopoverTrigger className="lg:hidden fixed right-6 bottom-4" asChild>
         <Button
           asChild
           className="rounded-full w-[56px] h-[56px] text-primary z-1000 bg-slate-50 hover:bg-slate-100"
