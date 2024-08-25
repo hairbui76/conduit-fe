@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Button } from '@/components/Button';
 import { IconChevronsDown } from '@tabler/icons-react';
 import { Separator } from '@/components/Separator';
-import CommentPost from '../CommentPost';
+import CommentPost from './CommentPost';
 import { Profile } from '@/types/Profile';
 import { Post, PostCardType } from '@/types/Post';
 import UserComment from './UserComment';
@@ -45,7 +45,7 @@ export default function PostCardComment({
         <Separator className="mt-2 mx-auto" style={{ width: '95%' }} />
       )}
       {authenticated ? (
-        <CommentPost currentUser={currentUser} slug={slug} />
+        <CommentPost currentUser={currentUser} post={post} />
       ) : (
         <div className="text-center py-4">
           <p className="pb-2">You need login to comment this post</p>

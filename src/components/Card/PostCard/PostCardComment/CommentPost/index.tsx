@@ -9,12 +9,17 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Textarea } from '@/components/TextArea';
 import { CommentSchema } from '@/forms/comment-form';
 import { Profile } from '@/types/Profile';
-import PostCardHeaderAvatar from '../PostCardAvatar';
+import PostCardHeaderAvatar from '../../PostCardAvatar';
 import { commentPost } from '@/actions/comment';
 import toast from 'react-hot-toast';
 import { insertNewLine } from '@/lib/utils';
+import { useSocket } from '@/hooks/useSocket';
+import { Post } from '@/types/Post';
 
-export default function CommentPost({ currentUser, slug }: { currentUser: Profile; slug: string }) {
+export default function CommentPost({ currentUser, post }: { currentUser: Profile; post: Post }) {
+  const { slug, title, author } = post;
+  const { socket, status } = useSocket();
+
   const [pending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CommentSchema>>({
     resolver: zodResolver(CommentSchema)
@@ -29,6 +34,13 @@ export default function CommentPost({ currentUser, slug }: { currentUser: Profil
         });
       } else {
         form.setValue('comment', '');
+        if (status !== 'connected') return;
+        socket?.emit('comment', {
+          from: currentUser.username,
+          to: author.username,
+          postSlug: slug,
+          postTitle: title
+        });
       }
     });
   }

@@ -20,9 +20,9 @@ export default function ProfileSettingsSection({ currentUser }: { currentUser: P
   const updateProfileForm = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
-      username: currentUser?.username,
-      image: currentUser?.image,
-      bio: currentUser?.bio
+      username: currentUser?.username || '',
+      image: currentUser?.image || '',
+      bio: currentUser?.bio || ''
     },
     mode: 'onChange'
   });

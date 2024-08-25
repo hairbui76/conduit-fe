@@ -7,17 +7,24 @@ import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
 import { suffixS } from '@/lib/utils';
 import { likePost, unlikePost } from '@/actions/post';
 import toast from 'react-hot-toast';
+import { Post } from '@/types/Post';
+import { Profile } from '@/types/Profile';
+import { useSocket } from '@/hooks/useSocket';
 
 export default function ButtonLike({
   numLike,
   liked,
-  slug
+  post,
+  currentUser
 }: {
   numLike: number;
   liked: boolean;
-  slug: string;
+  post: Post;
+  currentUser: Profile | null;
 }) {
+  const { slug, title, author } = post;
   const [hover, setHover] = useState(false);
+  const { socket, status } = useSocket();
   const [optimisticLikeState, optimisticLikePost] = useOptimistic(
     { numLike, liked },
     (curLikeState, action: 'like' | 'unlike') => {
@@ -52,6 +59,14 @@ export default function ButtonLike({
           if (response?.error) {
             toast.error(response.error, {
               position: 'top-center'
+            });
+          } else {
+            if (status !== 'connected') return;
+            socket?.emit('like', {
+              from: currentUser?.username || '',
+              to: author.username,
+              postSlug: slug,
+              postTitle: title
             });
           }
         }

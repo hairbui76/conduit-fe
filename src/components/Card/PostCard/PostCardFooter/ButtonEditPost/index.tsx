@@ -70,8 +70,8 @@ export default function ButtonEditPost({ post }: { post: Post }) {
 
   return (
     <Dialog open={open}>
-      <DialogTrigger className="flex-grow">
-        <Button className="py-0 w-full" variant="ghost" onClick={() => setOpen(true)}>
+      <DialogTrigger className="flex-grow" asChild>
+        <Button className="py-0" variant="ghost" onClick={() => setOpen(true)}>
           <IconEdit className="mr-2" />
           Edit
         </Button>
@@ -147,7 +147,7 @@ export default function ButtonEditPost({ post }: { post: Post }) {
               )}
             />
             <DialogFooter className="flex-row justify-end gap-3 sm:gap-0">
-              <DialogClose>
+              <DialogClose asChild>
                 <Button
                   variant="outline"
                   disabled={pending}

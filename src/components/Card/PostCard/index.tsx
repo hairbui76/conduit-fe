@@ -29,7 +29,7 @@ export default function PostCard({
         <PostCardAction isMe={isMe} slug={slug} />
       </div>
       <PostCardContent post={post} type={type} />
-      <PostCardFooter type={type} post={post} isMe={isMe} />
+      <PostCardFooter type={type} post={post} isMe={isMe} currentUser={currentUser} />
       <PostCardComment type={type} post={post} currentUser={currentUser} slug={slug} />
     </Card>
   );

@@ -1,0 +1,7 @@
+{
+  "watch": ["./src", ".env.local", "package-lock.json"],
+  "ext": "ts",
+  "execMap": {
+    "ts": "ts-node"
+  }
+}
