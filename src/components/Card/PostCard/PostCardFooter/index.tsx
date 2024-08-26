@@ -4,6 +4,7 @@ import { Post, PostCardType } from '@/types/Post';
 import { Profile } from '@/types/Profile';
 import ButtonComment from './ButtonComment';
 import ButtonLike from './ButtonLike';
+import ButtonShare from './ButtonShare';
 
 export default function PostCardFooter({
   post,
@@ -25,8 +26,9 @@ export default function PostCardFooter({
         id={slug}
         variant="ghost"
         iconClassName="mr-2"
-        className="py-0 flex-row-reverse flex-grow"
+        className="py-0 px-2 flex-row-reverse flex-grow"
       />
+      <ButtonShare slug={slug} />
     </CardFooter>
   );
 }

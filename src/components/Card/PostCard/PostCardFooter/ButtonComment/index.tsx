@@ -20,7 +20,7 @@ export default function ButtonComment({
   return (
     <Button
       variant="ghost"
-      className="flex-grow py-0"
+      className="flex-grow py-0 px-2"
       onClick={() => {
         if (type === 'summary') router.push(`/post/${slug}`);
       }}
