@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 import ButtonCopy from '@/components/Button/ButtonCopy';
 import { Button } from '@/components/Button';
 import ButtonDeletePost from './ButtonDeletePost';
@@ -9,37 +13,42 @@ import {
   DropdownMenuTrigger
 } from '@/components/DropdownMenu';
 import { IconDots } from '@tabler/icons-react';
+import { Post } from '@/types/Post';
+import { Dialog, DialogTrigger } from '@/components/Dialog';
+import EditPostDialog from '@/components/Dialog/EditPostDialog';
+import ButtonEditPost from './ButtonEditPost';
 
-export default function PostCardAction({ isMe, slug }: { isMe: boolean; slug: string }) {
+export default function PostCardAction({ isMe, post }: { isMe: boolean; post: Post }) {
+  const [open, setOpen] = useState(false);
+
+  if (!isMe) return null;
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="rounded-full p-1 w-8 h-8 ml-auto"
-          aria-label="Action with this post"
-        >
-          <IconDots />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 p-2" align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem className="p-0">
-            <ButtonCopy
-              page="/post"
-              id={slug}
-              variant="ghost"
-              className="px-2 flex-grow"
-              iconClassName="w-5 h-5 ml-auto"
-            />
-          </DropdownMenuItem>
-          {isMe && (
+    <Dialog open={open}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="rounded-full p-1 w-8 h-8 ml-auto"
+            aria-label="Action with this post"
+          >
+            <IconDots />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56 p-2" align="end">
+          <DropdownMenuGroup>
             <DropdownMenuItem className="p-0">
-              <ButtonDeletePost slug={slug} />
+              <ButtonDeletePost slug={post.slug} />
             </DropdownMenuItem>
-          )}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+            <DropdownMenuItem className="p-0">
+              <DialogTrigger className="flex-grow" asChild>
+                <ButtonEditPost setOpen={setOpen} />
+              </DialogTrigger>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <EditPostDialog post={post} setOpen={setOpen} />
+    </Dialog>
   );
 }
