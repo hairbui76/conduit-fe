@@ -14,6 +14,7 @@ import { updateProfile } from '@/actions/user';
 import toast from 'react-hot-toast';
 import Spinner from '@/components/Spinner';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
 
 export default function ProfileSettingsSection({ currentUser }: { currentUser: Profile | null }) {
   const [pending, startTransition] = useTransition();
@@ -47,6 +48,28 @@ export default function ProfileSettingsSection({ currentUser }: { currentUser: P
   return (
     <Form {...updateProfileForm}>
       <form onSubmit={updateProfileForm.handleSubmit(onSubmit)} className="space-y-8">
+        <Avatar className="w-28 h-28">
+          <AvatarImage
+            src={updateProfileForm.getValues('image')}
+            alt={`${currentUser.username} avatar`}
+          />
+          <AvatarFallback className="text-2xl">
+            {currentUser.username[0].toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+        <FormField
+          control={updateProfileForm.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image URL</FormLabel>
+              <FormControl>
+                <Input {...field} disabled={pending} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={updateProfileForm.control}
           name="username"
@@ -73,19 +96,6 @@ export default function ProfileSettingsSection({ currentUser }: { currentUser: P
                   {...field}
                   disabled={pending}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={updateProfileForm.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image URL</FormLabel>
-              <FormControl>
-                <Input {...field} disabled={pending} />
               </FormControl>
               <FormMessage />
             </FormItem>

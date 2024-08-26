@@ -32,5 +32,5 @@ export async function getCurrentUser(token: string | undefined) {
 
   const currentUser: { user: Profile } = await response.json();
 
-  return currentUser.user;
+  return await getProfile(currentUser.user.username, token);
 }
