@@ -5,14 +5,12 @@ import { IconLink } from '@tabler/icons-react';
 import toast from 'react-hot-toast';
 
 export default function ButtonCopy({
-  page,
-  id,
+  url,
   variant,
   className,
   iconClassName
 }: {
-  page: string;
-  id: string;
+  url: string;
   variant?:
     | 'default'
     | 'destructive'
@@ -30,7 +28,7 @@ export default function ButtonCopy({
       variant={variant || 'default'}
       className={className}
       onClick={() => {
-        navigator.clipboard.writeText(`${window.location.origin}${page}/${id}`);
+        navigator.clipboard.writeText(url);
         toast.success('Copied link to clipboard', { position: 'top-center' });
       }}
     >

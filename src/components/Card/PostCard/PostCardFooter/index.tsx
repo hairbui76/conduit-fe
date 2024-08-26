@@ -22,13 +22,12 @@ export default function PostCardFooter({
       <ButtonLike numLike={numLike} liked={liked} post={post} currentUser={currentUser} />
       <ButtonComment numComment={numComment} slug={slug} type={type} />
       <ButtonCopy
-        page="/post"
-        id={slug}
+        url={`${process.env.BASE_URL}/post/${slug}`}
         variant="ghost"
         iconClassName="mr-2"
         className="py-0 px-2 flex-row-reverse flex-grow"
       />
-      <ButtonShare slug={slug} />
+      <ButtonShare url={`${process.env.BASE_URL}/post/${slug}`} />
     </CardFooter>
   );
 }

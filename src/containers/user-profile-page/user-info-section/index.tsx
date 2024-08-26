@@ -23,8 +23,7 @@ export default function UserInfoSection({ profile, isMe }: { profile: Profile; i
             <ButtonFollow username={username} following={following} className="flex-grow" />
           )}
           <ButtonCopy
-            page=""
-            id={username}
+            url={`${process.env.BASE_URL}/${username}`}
             variant="outline"
             className="flex-row-reverse flex-grow"
             iconClassName="mr-2"

@@ -19,9 +19,7 @@ import {
   XIcon
 } from 'react-share';
 
-export default function ButtonShare({ slug }: { slug: string }) {
-  const url = `${window.location.origin}/post/${slug}`;
-
+export default function ButtonShare({ url }: { url: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
