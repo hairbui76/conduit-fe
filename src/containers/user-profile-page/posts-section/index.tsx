@@ -1,8 +1,14 @@
 import { default as PostsContainer } from '@/containers/posts';
 import Posts from '@/components/Posts';
 import { Profile } from '@/types/Profile';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Tabs';
 
-export default function RecentPost({
+enum TabNames {
+  Recent = 'recent',
+  Liked = 'liked'
+}
+
+export default function PostSection({
   username,
   currentUser
 }: {
@@ -11,14 +17,34 @@ export default function RecentPost({
 }) {
   return (
     <div className="mt-6">
-      <h3 className="text-xl font-semibold mb-2">Recent posts</h3>
-      <PostsContainer className="w-full sm:w-full">
-        <Posts
-          fetchUrl={`${process.env.BACKEND_URL}/api/articles`}
-          options={{ author: username }}
-          currentUser={currentUser}
-        />
-      </PostsContainer>
+      <Tabs defaultValue={TabNames.Recent}>
+        <TabsList className="mb-2 w-full flex-wrap h-fit">
+          <TabsTrigger value={TabNames.Recent} className="flex-grow">
+            Recent posts
+          </TabsTrigger>
+          <TabsTrigger value={TabNames.Liked} className="flex-grow">
+            Liked posts
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value={TabNames.Recent}>
+          <PostsContainer className="w-full sm:w-full">
+            <Posts
+              fetchUrl={`${process.env.BACKEND_URL}/api/articles`}
+              options={{ author: username }}
+              currentUser={currentUser}
+            />
+          </PostsContainer>
+        </TabsContent>
+        <TabsContent value={TabNames.Liked}>
+          <PostsContainer>
+            <Posts
+              fetchUrl={`${process.env.BACKEND_URL}/api/articles`}
+              options={{ liked: username }}
+              currentUser={currentUser}
+            />
+          </PostsContainer>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

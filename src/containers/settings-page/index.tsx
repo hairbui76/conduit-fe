@@ -14,7 +14,7 @@ export default async function SettingsContainer() {
   const currentUser = await getCurrentUser(cookies().get('AUTH_TOKEN')?.value);
 
   return (
-    <Card className="px-10 py-12 sm:w-[600px] md:w-[670px] lg:w-[900px] h-fit">
+    <Card className="px-10 py-12 flex-grow sm:w-[600px] md:w-[670px] lg:w-[900px] h-fit">
       <div className="space-y-0.5">
         <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
         <p className="text-muted-foreground">Manage your account settings and set appearance.</p>

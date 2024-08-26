@@ -22,7 +22,7 @@ export default function PostCard({
   const isMe = currentUser !== null && currentUser.username === author.username;
 
   return (
-    <Card className="w-full pt-6 pb-4 px-8">
+    <Card className="w-full px-4 pt-6 pb-4 sm:px-8">
       <div className="flex items-center gap-3">
         <PostCardHeaderAvatar author={author} />
         <PostCardHeader author={author} createdAt={createdAt} isMe={isMe} />

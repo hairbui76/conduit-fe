@@ -8,7 +8,9 @@ export default function PostSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className={cn('flex flex-col items-center gap-4 sm:w-[570px] h-fit', className)}>
+    <section
+      className={cn('flex flex-col items-center gap-4 w-full sm:w-[570px] h-fit', className)}
+    >
       {children}
     </section>
   );

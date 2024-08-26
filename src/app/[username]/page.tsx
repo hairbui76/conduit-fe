@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { Card, CardContent, CardHeader } from '@/components/Card';
 import UserInfoSection from '@/containers/user-profile-page/user-info-section';
 import BackgroundSection from '@/containers/user-profile-page/background-section';
-import RecentPost from '@/containers/user-profile-page/posts-section';
+import PostsSection from '@/containers/user-profile-page/posts-section';
 import { getCurrentUser, getProfile } from '@/data/user';
 
 export const generateMetadata = async ({ params }: { params: { username: string } }) => {
@@ -43,14 +43,14 @@ export default async function Page({ params }: { params: { username: string } })
   const isMe = currentUser !== null && currentUser.username === profile.username;
 
   return (
-    <div className="flex flex-col items-center gap-4 px-4 sm:px-8 sm:w-[600px] md:w-[670px] lg:w-[700px] h-fit">
+    <div className="flex flex-col items-center gap-4 sm:px-8 w-full sm:w-[600px] md:w-[670px] lg:w-[700px] h-fit">
       <Card className="w-full overflow-hidden">
         <CardHeader className="p-0 w-full relative h-40">
           <BackgroundSection />
         </CardHeader>
-        <CardContent className="z-40 px-8">
+        <CardContent className="z-40 px-4 sm:px-8">
           <UserInfoSection profile={profile} isMe={isMe} />
-          <RecentPost username={username} currentUser={currentUser} />
+          <PostsSection username={username} currentUser={currentUser} />
         </CardContent>
       </Card>
     </div>
