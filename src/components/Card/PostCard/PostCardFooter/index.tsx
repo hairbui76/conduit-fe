@@ -9,17 +9,25 @@ import ButtonShare from './ButtonShare';
 export default function PostCardFooter({
   post,
   type,
-  currentUser
+  currentUser,
+  setPosts
 }: {
   post: Post;
   type: PostCardType;
   currentUser: Profile | null;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   const { favoritesCount: numLike, favorited: liked, slug, commentsCount: numComment } = post;
 
   return (
     <CardFooter className="py-0 flex-wrap gap-2 px-4">
-      <ButtonLike numLike={numLike} liked={liked} post={post} currentUser={currentUser} />
+      <ButtonLike
+        numLike={numLike}
+        liked={liked}
+        post={post}
+        currentUser={currentUser}
+        setPosts={setPosts}
+      />
       <ButtonComment numComment={numComment} slug={slug} type={type} />
       <ButtonCopy
         url={`${process.env.BASE_URL}/post/${slug}`}

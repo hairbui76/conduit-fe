@@ -7,16 +7,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/DropdownMenu';
+import { Post } from '@/types/Post';
 import { IconDots } from '@tabler/icons-react';
 
 export default function CommentAction({
   isMe,
   slug,
-  commentId
+  commentId,
+  setPosts
 }: {
   isMe: boolean;
   slug: string;
   commentId: string;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   if (!isMe) return null;
 
@@ -35,7 +38,7 @@ export default function CommentAction({
       <DropdownMenuContent className="w-32 p-2" align="start">
         <DropdownMenuGroup>
           <DropdownMenuItem className="p-0">
-            <ButtonDeleteComment slug={slug} commentId={commentId} />
+            <ButtonDeleteComment slug={slug} commentId={commentId} setPosts={setPosts} />
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

@@ -44,6 +44,7 @@ export async function getPosts(
     const comments = commentsData[index].comments;
     article.commentsCount = comments.length;
     article.firstComment = comments.length > 0 ? comments[0] : null;
+    article.comments = comments;
   });
 
   return {

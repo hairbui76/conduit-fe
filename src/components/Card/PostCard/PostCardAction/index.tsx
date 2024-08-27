@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import ButtonCopy from '@/components/Button/ButtonCopy';
 import { Button } from '@/components/Button';
@@ -18,7 +18,15 @@ import { Dialog, DialogTrigger } from '@/components/Dialog';
 import EditPostDialog from '@/components/Dialog/EditPostDialog';
 import ButtonEditPost from './ButtonEditPost';
 
-export default function PostCardAction({ isMe, post }: { isMe: boolean; post: Post }) {
+export default function PostCardAction({
+  isMe,
+  post,
+  setPosts
+}: {
+  isMe: boolean;
+  post: Post;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
+}) {
   const [open, setOpen] = useState(false);
 
   if (!isMe) return null;
@@ -38,7 +46,7 @@ export default function PostCardAction({ isMe, post }: { isMe: boolean; post: Po
         <DropdownMenuContent className="w-56 p-2" align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem className="p-0">
-              <ButtonDeletePost slug={post.slug} />
+              <ButtonDeletePost slug={post.slug} setPosts={setPosts} />
             </DropdownMenuItem>
             <DropdownMenuItem className="p-0">
               <DialogTrigger className="flex-grow" asChild>
@@ -48,7 +56,7 @@ export default function PostCardAction({ isMe, post }: { isMe: boolean; post: Po
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <EditPostDialog post={post} setOpen={setOpen} />
+      <EditPostDialog post={post} setOpen={setOpen} setPosts={setPosts} />
     </Dialog>
   );
 }

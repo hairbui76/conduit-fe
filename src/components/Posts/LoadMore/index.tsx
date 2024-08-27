@@ -46,7 +46,7 @@ export default function LoadMore({
   return (
     <>
       {posts.map(post => (
-        <PostCard key={post.slug} post={post} currentUser={currentUser} />
+        <PostCard key={post.slug} post={post} currentUser={currentUser} setPosts={setPosts} />
       ))}
       <div ref={ref} className={(cn('pb-2'), page === null ? 'hidden' : '')}>
         <Spinner className="my-2 w-7 h-7 stroke-primary" />

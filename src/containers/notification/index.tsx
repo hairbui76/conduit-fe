@@ -20,7 +20,7 @@ export default function Notification() {
     toast(
       t => (
         <Link href={`/post/${postSlug}`} onClick={() => toast.dismiss(t.id)}>
-          <strong>{user}</strong> {action === 'comment' ? 'commented' : 'liked'} on your post:
+          <strong>{user}</strong> {action === 'comment' ? 'commented on' : 'liked'} your post:
           &quot;
           <strong>{sliceString(postTitle, 30)}</strong>&quot;
         </Link>

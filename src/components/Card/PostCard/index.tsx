@@ -5,17 +5,18 @@ import PostCardContent from './PostCardContent';
 import PostCardFooter from './PostCardFooter';
 import PostCardAction from './PostCardAction';
 import { Card } from '@/components/Card';
-import { Comment } from '@/types/Comment';
 import PostCardComment from './PostCardComment';
 import { Profile } from '@/types/Profile';
 
 export default function PostCard({
   post,
   type = 'summary',
+  setPosts,
   currentUser = null
 }: {
   post: Post;
   type?: PostCardType;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
   currentUser?: Profile | null;
 }) {
   const { author, createdAt, slug } = post;
@@ -26,11 +27,17 @@ export default function PostCard({
       <div className="flex items-center gap-3">
         <PostCardHeaderAvatar author={author} />
         <PostCardHeader author={author} createdAt={createdAt} isMe={isMe} />
-        <PostCardAction isMe={isMe} post={post} />
+        <PostCardAction isMe={isMe} post={post} setPosts={setPosts} />
       </div>
       <PostCardContent post={post} type={type} />
-      <PostCardFooter type={type} post={post} currentUser={currentUser} />
-      <PostCardComment type={type} post={post} currentUser={currentUser} slug={slug} />
+      <PostCardFooter type={type} post={post} currentUser={currentUser} setPosts={setPosts} />
+      <PostCardComment
+        type={type}
+        post={post}
+        currentUser={currentUser}
+        slug={slug}
+        setPosts={setPosts}
+      />
     </Card>
   );
 }

@@ -2,22 +2,40 @@
 
 import { deleteComment } from '@/actions/comment';
 import { Button } from '@/components/Button';
+import { Post } from '@/types/Post';
 import { IconTrash } from '@tabler/icons-react';
 import toast from 'react-hot-toast';
 
 export default function ButtonDeleteComment({
   slug,
-  commentId
+  commentId,
+  setPosts
 }: {
   slug: string;
   commentId: string;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   function handleDeleteComment() {
     toast.promise(
       deleteComment({ slug: slug, commentId: commentId }),
       {
         loading: 'Deleting comment',
-        success: 'Comment was deleted successfully',
+        success: () => {
+          if (setPosts !== undefined)
+            setPosts(posts =>
+              posts.map(post =>
+                post.slug === slug
+                  ? {
+                      ...post,
+                      firstComment: post.commentsCount > 1 ? post.comments[1] : null,
+                      comments: post.comments.slice(1),
+                      commentsCount: post.commentsCount - 1
+                    }
+                  : post
+              )
+            );
+          return 'Comment was deleted successfully';
+        },
         error: err => err.message
       },
       {

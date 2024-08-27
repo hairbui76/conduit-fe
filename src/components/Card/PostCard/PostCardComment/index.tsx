@@ -16,12 +16,14 @@ export default function PostCardComment({
   post,
   currentUser,
   slug,
-  type
+  type,
+  setPosts
 }: {
   post: Post;
   currentUser: Profile | null;
   slug: string;
   type: PostCardType;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   const initialNumComment = 4;
   const authenticated = !!currentUser;
@@ -36,6 +38,7 @@ export default function PostCardComment({
           currentUser={currentUser}
           slug={slug}
           className="mb-0 mt-5"
+          setPosts={setPosts}
         />
       </>
     ) : null

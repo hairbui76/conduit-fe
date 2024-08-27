@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { PostSchema } from '@/forms/create-form';
 import { insertNewLine } from '@/lib/utils';
 import { z } from 'zod';
+import { Post } from '@/types/Post';
 
 export async function createPost(createPostFormData: z.infer<typeof PostSchema>) {
   const token = cookies().get('AUTH_TOKEN')?.value;
@@ -72,6 +73,8 @@ export async function updatePost({
 
   revalidateTag('posts');
   revalidateTag('tags');
+
+  return (await response.json()).article as Post;
 }
 
 export async function deletePost(slug: string) {

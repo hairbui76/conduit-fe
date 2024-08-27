@@ -6,17 +6,20 @@ import CommentAction from '../CommentAction';
 import { Comment } from '@/types/Comment';
 import { Profile } from '@/types/Profile';
 import { cn } from '@/lib/utils';
+import { Post } from '@/types/Post';
 
 export default function UserComment({
   comment,
   currentUser,
   slug,
-  className
+  className,
+  setPosts
 }: {
   comment: Comment | null;
   currentUser: Profile | null;
   slug: string;
   className?: string;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   if (!comment) return null;
 
@@ -36,7 +39,7 @@ export default function UserComment({
           ))}
         </div>
       </div>
-      <CommentAction isMe={isMe} slug={slug} commentId={id} />
+      <CommentAction isMe={isMe} slug={slug} commentId={id} setPosts={setPosts} />
     </div>
   );
 }

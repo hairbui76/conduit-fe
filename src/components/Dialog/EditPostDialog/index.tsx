@@ -33,10 +33,12 @@ import { updatePost } from '@/actions/post';
 
 export default function EditPostDialog({
   post,
-  setOpen
+  setOpen,
+  setPosts
 }: {
   post: Post;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   const { title, description, body, tagList, slug } = post;
   const [pending, startTransition] = useTransition();
@@ -55,7 +57,7 @@ export default function EditPostDialog({
   function onUpdatePost(updatePostFormData: z.infer<typeof PostSchema>) {
     startTransition(async () => {
       const response = await updatePost({ updatePostFormData, slug });
-      if (response?.error) {
+      if ('error' in response) {
         toast.error(response.error, {
           style: { marginRight: '16px' },
           position: 'top-right'
@@ -65,6 +67,8 @@ export default function EditPostDialog({
           style: { marginRight: '16px' },
           position: 'top-right'
         });
+        if (setPosts !== undefined)
+          setPosts(posts => posts.map(post => (post.slug === slug ? response : post)));
       }
       setOpen(false);
     });

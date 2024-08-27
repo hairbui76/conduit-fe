@@ -1,6 +1,6 @@
 'use client';
 
-import { useOptimistic, useState } from 'react';
+import { useOptimistic, useState, useTransition } from 'react';
 
 import { Button } from '@/components/Button';
 import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
@@ -15,25 +15,38 @@ export default function ButtonLike({
   numLike,
   liked,
   post,
-  currentUser
+  currentUser,
+  setPosts
 }: {
   numLike: number;
   liked: boolean;
   post: Post;
   currentUser: Profile | null;
+  setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   const { slug, title, author } = post;
   const [hover, setHover] = useState(false);
   const { socket, status } = useSocket();
   const [optimisticLikeState, optimisticLikePost] = useOptimistic(
     { numLike, liked },
-    (curLikeState, action: 'like' | 'unlike') => {
-      return {
-        numLike: action === 'like' ? curLikeState.numLike + 1 : curLikeState.numLike - 1,
-        liked: !curLikeState.liked
-      };
-    }
+    (_, newState: { numLike: number; liked: boolean }) => newState
   );
+  const [_, startTransition] = useTransition();
+
+  const updatePosts = (slug: string, newState: { numLike: number; liked: boolean }) => {
+    if (setPosts === undefined) return;
+    setPosts(posts =>
+      posts.map(post =>
+        post.slug === slug
+          ? {
+              ...post,
+              favorited: newState.liked,
+              favoritesCount: newState.numLike
+            }
+          : post
+      )
+    );
+  };
 
   return (
     <Button
@@ -46,29 +59,44 @@ export default function ButtonLike({
       onClick={async () => {
         const { liked } = optimisticLikeState;
         if (liked) {
-          optimisticLikePost('unlike');
-          const response = await unlikePost(slug);
-          if (response?.error) {
-            toast.error(response.error, {
-              position: 'top-center'
-            });
-          }
+          startTransition(async () => {
+            const newState = {
+              liked: false,
+              numLike: optimisticLikeState.numLike - 1
+            };
+            optimisticLikePost(newState);
+            const response = await unlikePost(slug);
+            if (response?.error) {
+              toast.error(response.error, {
+                position: 'top-center'
+              });
+            } else {
+              updatePosts(slug, newState);
+            }
+          });
         } else {
-          optimisticLikePost('like');
-          const response = await likePost(slug);
-          if (response?.error) {
-            toast.error(response.error, {
-              position: 'top-center'
-            });
-          } else {
-            if (status !== 'connected') return;
-            socket?.emit('like', {
-              from: currentUser?.username || '',
-              to: author.username,
-              postSlug: slug,
-              postTitle: title
-            });
-          }
+          startTransition(async () => {
+            const newState = {
+              liked: true,
+              numLike: optimisticLikeState.numLike + 1
+            };
+            optimisticLikePost(newState);
+            const response = await likePost(slug);
+            if (response?.error) {
+              toast.error(response.error, {
+                position: 'top-center'
+              });
+            } else {
+              updatePosts(slug, newState);
+              if (status !== 'connected') return;
+              socket?.emit('like', {
+                from: currentUser?.username || '',
+                to: author.username,
+                postSlug: slug,
+                postTitle: title
+              });
+            }
+          });
         }
       }}
     >
