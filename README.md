@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Conduit
 
-## Getting Started
+Conduit is dynamic social media platform
 
-First, run the development server:
+## Installation
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/nguyen-duc-loc/conduit.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open a new window in your terminal, change directory to `socket`, create a new `.env.local` file and add the following environment variable to that file
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`SOCKET_PORT`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Then, install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Back to the first window in your terminal, create a new `.env.local` file and add the following environment variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`BACKEND_URL=https://node-express-conduit.appspot.com`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`BASE_URL`
 
-## Deploy on Vercel
+`SOCKET_HOST`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Note:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `BASE_URL` is the url of your website, if your run locally, assign it to `http://localhost:3000`.
+- `SOCKET_HOST` will be equal to `localhost:{SOCKET_PORT}` (`SOCKET_PORT` is the value you assigned in `socket/.env.local` file).
+
+After that, install dependencies
+
+```bash
+  npm install
+```
+
+If you want run the development server, run the following command
+
+```bash
+  npm run dev
+```
+
+Or, if your want to run the production server, you need generate an optimized version of your application for production.
+
+```bash
+  npm run build
+```
+
+Once that's done, start your server
+
+```bash
+  npm run start
+```
+
+Finally, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
