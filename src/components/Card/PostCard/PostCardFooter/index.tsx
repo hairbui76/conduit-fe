@@ -18,6 +18,7 @@ export default function PostCardFooter({
   setPosts?: React.Dispatch<React.SetStateAction<Post[]>>;
 }) {
   const { favoritesCount: numLike, favorited: liked, slug, commentsCount: numComment } = post;
+  console.log(post);
 
   return (
     <CardFooter className="py-0 flex-wrap gap-2 px-4">

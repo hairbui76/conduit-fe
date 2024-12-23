@@ -78,8 +78,23 @@ export async function unfollowUser(username: string) {
   revalidateTag(username);
 }
 
+export async function getToken() {
+  const token = cookies().get('AUTH_TOKEN')?.value;
+
+  if (!token) {
+    return { error: 'You need login to update profile' };
+  }
+
+  return token;
+}
+
 export async function updateProfile(updateProfileFormData: z.infer<typeof UpdateProfileSchema>) {
   const token = cookies().get('AUTH_TOKEN')?.value;
+
+  const formData = new FormData();
+  for (const key in updateProfileFormData) {
+    formData.append(key, updateProfileFormData[key]);
+  }
 
   if (!token) {
     return { error: 'You need login to update profile' };
@@ -88,12 +103,9 @@ export async function updateProfile(updateProfileFormData: z.infer<typeof Update
   const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     },
-    body: JSON.stringify({
-      user: updateProfileFormData
-    })
+    body: formData
   });
 
   if (!response.ok) {

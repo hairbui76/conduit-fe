@@ -90,6 +90,7 @@ export async function deletePost(slug: string) {
       Authorization: `Bearer ${token}`
     }
   });
+  console.log(response);
 
   if (!response.ok) {
     return { error: 'Could not delete post' };
