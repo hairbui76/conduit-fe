@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 
-import { getToken } from '@/actions/user';
+import { updateProfile } from '@/actions/user';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar';
 import { Button } from '@/components/Button';
 import NeedAuthCard from '@/components/Card/NeedAuthCard';
@@ -59,18 +59,9 @@ export default function ProfileSettingsSection({ currentUser }: { currentUser: P
       for (const key in updateProfileFormData) {
         formData.append(key, updateProfileFormData[key]);
       }
-      if (selectedImage) {
-        formData.delete('image');
-        formData.append('avatar', selectedImage);
-      }
-      const token = await getToken();
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      });
+
+      if (selectedImage) formData.append('avatar', selectedImage);
+      const response = await updateProfile(formData);
       if (response?.error) {
         toast.error(response.error, {
           position: 'top-center'

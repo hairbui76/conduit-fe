@@ -1,11 +1,13 @@
+import { zfd } from 'zod-form-data';
 import { z } from 'zod';
 
-export const UpdateProfileSchema = z.object({
+export const UpdateProfileSchema = zfd.formData({
   username: z.string().trim().min(1, {
     message: 'Username must not be empty'
   }),
   image: z.string(),
-  bio: z.string()
+  bio: z.string(),
+  avatar: zfd.file().optional()
 });
 
 export const UpdatePassWordSchema = z

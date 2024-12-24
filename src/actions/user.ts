@@ -88,13 +88,15 @@ export async function getToken() {
   return token;
 }
 
-export async function updateProfile(updateProfileFormData: z.infer<typeof UpdateProfileSchema>) {
+export async function updateProfile(formData: FormData) {
   const token = cookies().get('AUTH_TOKEN')?.value;
 
-  const formData = new FormData();
-  for (const key in updateProfileFormData) {
-    formData.append(key, updateProfileFormData[key]);
-  }
+  // const formData = new FormData();
+  // for (const key in updateProfileFormData) {
+  //   formData.append(key, updateProfileFormData[key]);
+  // }
+
+  // if (image) formData.append('avatar', image);
 
   if (!token) {
     return { error: 'You need login to update profile' };
